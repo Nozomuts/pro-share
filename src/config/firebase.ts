@@ -1,6 +1,6 @@
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
-import 'firebase/store'
+import 'firebase/firestore'
 import 'firebase/storage'
 
 const firebaseConfig = {
