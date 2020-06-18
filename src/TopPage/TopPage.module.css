@@ -1,0 +1,76 @@
+.TopPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.Header {
+  background-color: black;
+  height: 10vh;
+  color: white;
+  font-size: 30px;
+  margin: 0;
+  padding-left: 10px;
+  line-height: 10vh;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
+
+.Container {
+  height: 100vh;
+  background: linear-gradient(to bottom, transparent,rgba(0,0,255,0.5) 50%),url(../image/TopPage.jpg);
+  background-size: contain;
+  display: flex;
+  background-repeat: no-repeat;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0 auto;
+  width: 80vw;
+  background-position: 50%;
+}
+
+.Title {
+  font-family: 'Anton', sans-serif;
+  font-size: 100px;
+  color: white;
+  text-align: center;
+  text-decoration: underline;
+  margin-top: 50px;
+  margin-bottom: 100px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+.List {
+  font-size: 30px;
+  color: white;
+  text-align: center;
+}
+
+
+.Button {
+  border: white 2px solid;
+  background-color: transparent;
+  color: white;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  font-size: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  outline: none;
+  margin-top: 200px;
+}
+.Button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.Top {
+  font-family: 'Anton', sans-serif;
+  font-size: 40px;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 10px black;
+}

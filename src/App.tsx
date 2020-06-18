@@ -9,11 +9,14 @@ import WriteArticle from './WriteArticle/WriteArticle';
 import Favorites from './Favorites/Favorites';
 import UserSettings from './UserSettings/UserSettings';
 import firebase from './config/firebase'
+import history from './history'
 
-function App({history}:any) {
+import 'semantic-ui-css/semantic.min.css'
+
+function App() {
   const user=firebase.auth().currentUser
   useEffect(()=>{
-    if(user){
+    if(!user){
       history.push('/toppage')
     }
   },[])
@@ -27,7 +30,7 @@ function App({history}:any) {
         <Route path="/write" component={WriteArticle}/>
         <Route path="/favorites" component={Favorites}/>
         <Route path="/settings" component={UserSettings}/>
-        <Route render={()=><h1>404 Page Not Found</h1>}/>
+        {/* <Route render={()=><h1>404 Page Not Found</h1>}/> */}
       </Switch>
     </BrowserRouter>
   );
