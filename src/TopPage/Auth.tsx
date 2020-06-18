@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import Signin from './Signin';
 import Signup from './Signup';
-import { Button, Grid } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 
 const Auth = () => {
   const [activeItem, setActiveItem] = useState(false);
   return (
     <>
-      <Grid.Row style={{margin: '0 auto',width: 450}}>
-          <Button style={{width: 220}} onClick={() => setActiveItem(false)}>Signin</Button>
-          <Button style={{width: 220}} onClick={() => setActiveItem(true)}>Signup</Button>
-      </Grid.Row>
+      <div style={{display: 'flex',marginBottom: 15,justifyContent: 'space-between'}}>
+          <Button active={!activeItem} style={{width: '30vw',margin: 0}} onClick={() => setActiveItem(false)}>Signin</Button>
+          <Button active={activeItem} style={{width: '30vw',margin: 0}} onClick={() => setActiveItem(true)}>Signup</Button>
+      </div>
         {activeItem ? <Signup /> : <Signin />}
     </>
   );

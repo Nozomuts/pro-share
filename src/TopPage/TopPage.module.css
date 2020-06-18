@@ -1,51 +1,97 @@
 .TopPage {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  background-image: url(../image/binary.jpg);
+  background-size: cover;
+  background-position: 20%;
 }
 
 .Header {
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: black;
-  height: 10vh;
-  color: white;
-  font-size: 30px;
   margin: 0;
-  padding-left: 10px;
-  line-height: 10vh;
+  padding:0 10vw;
   position: fixed;
   top: 0;
-  width: 100vw;
+  z-index: 100;
+  height: 10vh;
+}
+
+.HeaderTitle {
+  color: white;
+  font-size: 30px;
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 0;
 }
 
 .Container {
   height: 100vh;
-  background: linear-gradient(to bottom, transparent,rgba(0,0,255,0.5) 50%),url(../image/TopPage.jpg);
+  background: linear-gradient(to bottom, transparent,rgba(0,0,255,1) 70%),url(../image/TopPage.jpg);
+  background-color: white;
   background-size: contain;
   display: flex;
-  background-repeat: no-repeat;
-  justify-content: space-evenly;
+  flex-direction: column;
   align-items: center;
-  padding: 0 auto;
+  background-repeat: no-repeat;
   width: 80vw;
-  background-position: 50%;
+  background-position: 80%;
+  margin: 0 auto;
+  opacity: 0.8;
+  padding-top: 180px;
+}
+
+.Top {
+  font-size: 40px;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 10px black;
+  letter-spacing: 3px;
+  margin-bottom: 90px;
 }
 
 .Title {
-  font-family: 'Anton', sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 100px;
   color: white;
   text-align: center;
   text-decoration: underline;
-  margin-top: 50px;
-  margin-bottom: 100px;
+  margin-bottom: 70px;
+  width: 60vw;
   background-color: rgba(255, 255, 255, 0.3);
 }
 
+.Wrap {
+  display: flex;
+  width: 70vw;
+  justify-content: space-evenly;
+}
+
+.Command {
+  width: 30vw;
+  height: 200px;
+  border-radius: 10%;
+  border: 2px solid white;
+  padding: 20px;
+}
 
 .List {
+  font-family: 'Orbitron', sans-serif;
   font-size: 30px;
   color: white;
-  text-align: center;
+  text-align: left;
+  letter-spacing: 2px;
+}
+.List:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.List:before {
+  content: '▶';
+  opacity: 0;
+}
+.List:hover:before {
+  content: '▶';
+  opacity: 1;
 }
 
 
@@ -53,24 +99,14 @@
   border: white 2px solid;
   background-color: transparent;
   color: white;
-  width: 300px;
-  height: 300px;
-  margin: 0 auto;
-  font-size: 50px;
-  border-radius: 50%;
+  width: 30vw;
+  height: 200px;
+  border-radius: 10%;
   cursor: pointer;
   outline: none;
-  margin-top: 200px;
 }
 .Button:hover {
   background-color: rgba(255, 255, 255, 0.3);
   color: white;
 }
 
-.Top {
-  font-family: 'Anton', sans-serif;
-  font-size: 40px;
-  color: white;
-  text-align: center;
-  text-shadow: 0 1px 10px black;
-}

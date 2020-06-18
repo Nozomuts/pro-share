@@ -56,7 +56,7 @@ const Signin = () => {
 
   return (
     <Grid textAlign='center' verticalAlign='middle' className='app'>
-      <Grid.Column style={{ maxWidth: 450 }}>
+      <Grid.Column style={{ width: '60vw' }}>
         <Form onSubmit={handleSubmit} size='large'>
           <Form.Input
             fluid
