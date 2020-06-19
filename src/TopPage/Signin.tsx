@@ -7,7 +7,6 @@ import {
 } from 'semantic-ui-react';
 import firebase from '../config/firebase';
 import { Error } from '../Type';
-import { Link } from 'react-router-dom';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
@@ -63,7 +62,7 @@ const Signin = () => {
             name='email'
             icon='mail'
             iconPosition='left'
-            placeholder='Email Address'
+            placeholder='メールアドレス'
             onChange={emailChange}
             value={email}
             className={handleInputError('email')}
@@ -74,7 +73,7 @@ const Signin = () => {
             name='password'
             icon='lock'
             iconPosition='left'
-            placeholder='Password'
+            placeholder='パスワード'
             onChange={passwordChange}
             value={password}
             className={handleInputError('password')}
@@ -84,11 +83,11 @@ const Signin = () => {
           <Button
             disabled={loading}
             className={loading ? 'loading' : ''}
-            color='violet'
+            color='red'
             fluid
             size='large'
           >
-            Submit
+            ログイン
           </Button>
         </Form>
         {errors.length > 0 && (

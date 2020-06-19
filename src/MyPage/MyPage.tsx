@@ -1,11 +1,18 @@
-import React from 'react'
+import React from 'react';
+import Header from '../UI/Header';
+import MediaQuery from 'react-responsive';
+import Footer from '../UI/Footer';
 
 const MyPage = () => {
   return (
-    <div>
-      
-    </div>
-  )
-}
+    <React.Fragment>
+      <Header />
+      <h1 style={{marginTop: 200}}>my page</h1>
+      <MediaQuery query='(max-width: 600px)'>
+        <Footer activeItem='mypage' />
+      </MediaQuery>
+    </React.Fragment>
+  );
+};
 
-export default MyPage
+export default MyPage;

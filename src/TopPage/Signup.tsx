@@ -8,7 +8,6 @@ import {
 } from 'semantic-ui-react';
 import firebase from '../config/firebase';
 import { Error } from '../Type';
-import { Link } from 'react-router-dom';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -138,7 +137,7 @@ const Signup = () => {
             name='user'
             icon='user'
             iconPosition='left'
-            placeholder='Username'
+            placeholder='ユーザー名'
             onChange={usernameChange}
             value={username}
             type='text'
@@ -148,7 +147,7 @@ const Signup = () => {
             name='email'
             icon='mail'
             iconPosition='left'
-            placeholder='Email Address'
+            placeholder='メールアドレス'
             onChange={emailChange}
             value={email}
             className={handleInputError('email')}
@@ -159,7 +158,7 @@ const Signup = () => {
             name='password'
             icon='lock'
             iconPosition='left'
-            placeholder='Password'
+            placeholder='パスワード'
             onChange={passwordChange}
             value={password}
             className={handleInputError('password')}
@@ -170,7 +169,7 @@ const Signup = () => {
             name='passwordConfirmation'
             icon='repeat'
             iconPosition='left'
-            placeholder='Password Confirmation'
+            placeholder='パスワード再入力'
             onChange={passwordConfirmationChange}
             value={passwordConfirmation}
             className={handleInputError('password')}
@@ -180,11 +179,11 @@ const Signup = () => {
           <Button
             disabled={loading}
             className={loading ? 'loading' : ''}
-            color='orange'
+            color='green'
             fluid
             size='large'
           >
-            Submit
+            新規登録
           </Button>
         </Form>
         {errors.length > 0 && (

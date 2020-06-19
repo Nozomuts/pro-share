@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Auth from './Auth';
-import { Modal, Icon, Button, Segment } from 'semantic-ui-react';
+import { Modal, Icon, Button } from 'semantic-ui-react';
 import classes from './TopPage.module.css';
+import MediaQuery from 'react-responsive';
 
 const TopPage = () => {
   const [modal, setModal] = useState(false);
@@ -12,9 +13,11 @@ const TopPage = () => {
           <Icon name='code' />
           Pro-Share.
         </h1>
-        <Button color='facebook' onClick={() => setModal(true)}>
-          新規登録/ログイン
-        </Button>
+        <MediaQuery query='(min-width: 601px)'>
+          <Button color='facebook' onClick={() => setModal(true)}>
+            新規登録/ログイン
+          </Button>
+        </MediaQuery>
       </div>
       <div className={classes.Container}>
         <h1 className={classes.Top}>プログラミング特化型情報共有サイト</h1>
@@ -26,13 +29,19 @@ const TopPage = () => {
             <h1 className={classes.List}>勉強方法を知る</h1>
           </div>
           <button className={classes.Button} onClick={() => setModal(true)}>
-            <h1 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 40 }}>
+            <h1
+              style={{ fontFamily: "'Orbitron', sans-serif", fontSize: '3.5vw' }}
+            >
               Start
             </h1>
           </button>
         </div>
       </div>
-      <Modal open={modal} style={{width: 450}} onClose={() => setModal(false)}>
+      <Modal
+        open={modal}
+        style={{ width: '80vw', padding: '0 4vw',maxWidth: 500 }}
+        onClose={() => setModal(false)}
+      >
         <Auth />
       </Modal>
     </div>

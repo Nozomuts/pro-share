@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import {  Switch, Route } from 'react-router-dom';
 import TopPage from './TopPage/TopPage';
 import MyPage from './MyPage/MyPage';
 import Ranking from './Ranking/Ranking';
@@ -9,19 +9,27 @@ import WriteArticle from './WriteArticle/WriteArticle';
 import Favorites from './Favorites/Favorites';
 import UserSettings from './UserSettings/UserSettings';
 import firebase from './config/firebase'
-import history from './history'
-
 import 'semantic-ui-css/semantic.min.css'
+import ForgetPassword from './TopPage/ForgetPassword';
+import { useDispatch } from 'react-redux';
+import { setUser, clearUser } from './re-ducks/user/actions';
 
-function App() {
-  const user=firebase.auth().currentUser
+function App({history}:any) {
+  const dispatch = useDispatch()
+
   useEffect(()=>{
-    if(!user){
-      history.push('/toppage')
-    }
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        dispatch(setUser(user))
+        history.push('/mypage')
+      }else{
+        history.push('/toppage')
+        dispatch(clearUser())
+      }
+    })
   },[])
+
   return (
-    <BrowserRouter>
       <Switch>
         <Route path="/toppage" component={TopPage}/>
         <Route path="/mypage" component={MyPage}/>
@@ -30,10 +38,11 @@ function App() {
         <Route path="/write" component={WriteArticle}/>
         <Route path="/favorites" component={Favorites}/>
         <Route path="/settings" component={UserSettings}/>
+        <Route path="/forget" component={ForgetPassword}/>
         {/* <Route render={()=><h1>404 Page Not Found</h1>}/> */}
       </Switch>
-    </BrowserRouter>
   );
 }
 
-export default App;
+
+export default App
