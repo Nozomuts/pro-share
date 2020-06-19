@@ -1,4 +1,4 @@
-@media screen and (min-width: 601px) {
+@media screen and (min-width: 671px) {
   .Title {
     font-size: 7vw;
     width: 60vw;
@@ -25,7 +25,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 670px) {
   .Title {
     font-size: 12vw;
     width: 85vw;
@@ -157,4 +157,11 @@
 .Button:hover {
   background-color: rgba(255, 255, 255, 0.3);
   color: white;
+}
+
+.active {
+  color: white;
+}
+.inActive {
+  color: gray;
 }
