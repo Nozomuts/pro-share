@@ -114,8 +114,7 @@ const Signup = () => {
       name: createdUser.user.displayName,
       avatar: createdUser.user.photoURL,
       id: createdUser.user.uid,
-      primary: '#b9c42f',
-      secondary: '#eee',
+      color: '#000',
       favorite: [],
     });
   };

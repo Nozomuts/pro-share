@@ -23,6 +23,12 @@
   .List {
     font-size: 2vw;
   }
+  .HeaderTitle {
+    color: white;
+    font-size: 25px;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 0;
+  }
 }
 
 @media screen and (max-width: 670px) {
@@ -54,6 +60,12 @@
   .List {
     font-size: 3vw;
   }
+  .HeaderTitle {
+    color: white;
+    font-size: 5vw;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 0;
+  }
 }
 
 .TopPage {
@@ -69,18 +81,12 @@
   align-items: center;
   background-color: black;
   margin: 0;
-  padding: 0 10vw;
+  padding: 0 5vw;
   position: fixed;
   top: 0;
   z-index: 100;
   height: 70px;
-}
-
-.HeaderTitle {
-  color: white;
-  font-size: 25px;
-  font-family: 'Orbitron', sans-serif;
-  margin-bottom: 0;
+  white-space: nowrap;
 }
 
 .Container {
@@ -161,7 +167,8 @@
 
 .active {
   color: white;
+  font-weight: bold;
 }
 .inActive {
-  color: gray;
+  color: rgba(255, 255, 255, 0.8);
 }

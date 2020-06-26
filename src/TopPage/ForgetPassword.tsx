@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import firebase from '../config/firebase';
-import { Link } from 'react-router-dom';
 import {
   Grid,
   Form,
@@ -10,11 +9,23 @@ import {
   Icon,
   Message,
 } from 'semantic-ui-react';
+import { useDispatch } from 'react-redux';
+import {clearUser} from '../re-ducks/user/actions'
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [completeShow, setCompleteShow] = useState(false);
+  const dispatch=useDispatch()
+
+  const handleClick=()=>{
+    firebase
+      .auth()
+      .signOut()
+      .then(() => console.log('signed out'));
+    dispatch(clearUser())
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     firebase
@@ -38,7 +49,7 @@ const ForgetPassword = () => {
       </Grid.Column>
       <Message>
         <Icon name='redo' />
-        <Link to='/toppage'>戻る</Link>
+        <p style={{color: 'blue',cursor: 'pointer'}} onClick={handleClick}>戻る</p>
       </Message>
     </Grid>
   ) : (
@@ -75,7 +86,7 @@ const ForgetPassword = () => {
         </Form>
         <Message>
           <Icon name='redo' />
-          <Link to='/toppage'>戻る</Link>
+          <p style={{color: 'blue',cursor: 'pointer'}} onClick={handleClick}>戻る</p>
         </Message>
       </Grid.Column>
     </Grid>

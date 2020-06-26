@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu, Icon, Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 type Props = {
@@ -8,6 +9,7 @@ type Props = {
 };
 
 const Footer = ({ activeItem }: Props) => {
+  const color = useSelector((state:any)=>state.color)
   return (
     <Menu
       size='small'
@@ -18,7 +20,8 @@ const Footer = ({ activeItem }: Props) => {
         position: 'fixed',
         bottom: 0,
         justifyContent: 'space-between',
-        zIndex: 100
+        zIndex: 100,
+        backgroundColor: color.color
       }}
       inverted
     >

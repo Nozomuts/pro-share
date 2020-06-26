@@ -27,6 +27,7 @@ function App({history}:any) {
         dispatch(clearUser())
       }
     })
+    firebase.firestore().collection('users')
   },[])
 
   return (

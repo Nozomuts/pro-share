@@ -1,10 +1,10 @@
 import { ActionTypes } from './constants';
 
-export const setColors = (primaryColor:string, secondaryColor:string) => {
+export const setColors = (color: string) => {
   return {
     type: ActionTypes.setColors,
     payload: {
-      primaryColor,secondaryColor
+      color
     }
   }
 };

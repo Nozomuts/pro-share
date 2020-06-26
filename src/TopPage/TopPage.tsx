@@ -20,7 +20,7 @@ const TopPage = () => {
         </MediaQuery>
       </div>
       <div className={classes.Container}>
-        <h1 className={classes.Top}>プログラミング特化型情報共有サイト</h1>
+        <h1 className={classes.Top}>JavaScript特化型情報共有サイト</h1>
         <h1 className={classes.Title}>Pro-Share.</h1>
         <div className={classes.Wrap}>
           <div className={classes.Command}>

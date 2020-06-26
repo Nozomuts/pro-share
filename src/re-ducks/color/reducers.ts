@@ -2,8 +2,7 @@ import { ActionTypes } from './constants';
 import {Color,SetColorsAction} from './types'
 
 const initialState: Color={
-  primaryColor: '',
-  secondaryColor: ''
+  color: ''
 }
 
 export const colorReducer = (state = initialState, action:SetColorsAction) => {
@@ -11,8 +10,7 @@ export const colorReducer = (state = initialState, action:SetColorsAction) => {
     case ActionTypes.setColors:
       return {
         ...state,
-        primaryColor: action.payload.primaryColor,
-        secondaryColor: action.payload.secondaryColor,
+        color: action.payload.color,
       };
     default:
       return state;

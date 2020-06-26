@@ -2,8 +2,7 @@ import {Action} from 'redux'
 import {ActionTypes} from './constants'
 
 export type Color = {
-  primaryColor: string,
-  secondaryColor: string
+  color: string
 }
 
 export interface SetColorsAction extends Action {
