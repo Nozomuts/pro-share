@@ -29,7 +29,7 @@ const MyPage = () => {
         }
       });
     }
-  }, []);
+  }, [user]);
 
   return (
     <React.Fragment>

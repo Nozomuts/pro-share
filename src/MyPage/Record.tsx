@@ -5,6 +5,7 @@ import firebase from '../config/firebase';
 import MediaQuery from 'react-responsive';
 import { Button, Message } from 'semantic-ui-react';
 import RecordForm from './RecordForm';
+import Gragh from './Gragh';
 
 const Record = ({ user }: any) => {
   const [dailyRecord, setDailyRecord] = useState([]);
@@ -36,7 +37,7 @@ const Record = ({ user }: any) => {
         }
       });
     }
-  }, []);
+  }, [user]);
 
   const changeOpen = () => {
     if (synthesisRecord.length > 0) {
@@ -51,6 +52,7 @@ const Record = ({ user }: any) => {
 
   return (
     <React.Fragment>
+      <Gragh record={synthesisRecord}/>
       <Button onClick={changeOpen}>{open ? '非公開にする' : '公開する'}</Button>
       {error&&<Message negative>{error}</Message>}
       

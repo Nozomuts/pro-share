@@ -40,7 +40,7 @@ function App({history}:any) {
         <Route path="/favorites" component={Favorites}/>
         <Route path="/settings" component={UserSettings}/>
         <Route path="/forget" component={ForgetPassword}/>
-        {/* <Route render={()=><h1>404 Page Not Found</h1>}/> */}
+        <Route render={()=><h1>404 Page Not Found</h1>}/>
       </Switch>
   );
 }
