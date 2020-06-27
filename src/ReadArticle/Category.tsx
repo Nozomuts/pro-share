@@ -1,24 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Select } from 'semantic-ui-react';
 import {categoryOptions,languageOptions} from '../UI/SelectOptions'
 
-const Category = () => {
-  const [languageValue, setLanguageValue] = useState('');
-  const [categoryValue, setCategoryValue] = useState('');
+const Category = ({category,language,setCategory,setLanguage}:any) => {
   
   return (
     <React.Fragment>
       <Select
         placeholder='選択してください'
-        value={languageValue}
+        value={language}
         options={languageOptions}
-        onChange={(e: any,{value}:any) => setLanguageValue(value)}
+        onChange={(e: any,{value}:any) => setLanguage(value)}
       />
       <Select
         placeholder='選択してください'
-        value={categoryValue}
+        value={category}
         options={categoryOptions}
-        onChange={(e: any,{value}:any) => setCategoryValue(value)}
+        onChange={(e: any,{value}:any) => setCategory(value)}
       />
     </React.Fragment>
   );

@@ -81,7 +81,9 @@ const Ranking = () => {
       <Header activeItem='ranking' />
       <h1 style={{ marginTop: 200 }}>ranking</h1>
       <MediaQuery query='(min-width: 671px)'>
+        デイリー
         <Daily ranking={dailyRanking} />
+        総合
         <Synthesis ranking={synthesisRanking} />
       </MediaQuery>
       <MediaQuery query='(max-width: 670px)'>
