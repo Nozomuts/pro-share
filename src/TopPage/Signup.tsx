@@ -3,18 +3,13 @@ import md5 from 'md5';
 import {
   Grid,
   Form,
-  Segment,
   Button,
-  Header,
   Message,
-  Icon,
 } from 'semantic-ui-react';
 import firebase from '../config/firebase';
-import {Error} from '../Type'
-import { Link } from 'react-router-dom';
+import { Error } from '../Type';
 
 const Signup = () => {
-
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,8 +20,7 @@ const Signup = () => {
 
   const isFormValid = () => {
     let errors: Error[] = [];
-    let error:Error;
-
+    let error: Error;
 
     if (isFormEmpty()) {
       error = { message: 'Fill in all fields' };
@@ -61,10 +55,8 @@ const Signup = () => {
     }
   };
 
-
   let displayErrors = () =>
     errors.map((error, i) => <p key={i}>{error.message}</p>);
-
 
   const usernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -75,10 +67,11 @@ const Signup = () => {
   const passwordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const passwordConfirmationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const passwordConfirmationChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setPasswordConfirmation(e.target.value);
   };
-
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     if (isFormValid()) {
@@ -116,17 +109,15 @@ const Signup = () => {
     }
   };
 
-
   const saveUser = (createdUser: any) => {
     return userRef.doc(createdUser.user.uid).set({
       name: createdUser.user.displayName,
       avatar: createdUser.user.photoURL,
       id: createdUser.user.uid,
-      primary: '#4c3c4c',
-      secondary: '#eee',
+      color: '#000',
+      favorite: [],
     });
   };
-
 
   const handleInputError = (inputName: string) => {
     return errors.some((error) =>
@@ -138,67 +129,61 @@ const Signup = () => {
 
   return (
     <Grid textAlign='center' verticalAlign='middle' className='app'>
-      <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as='h2' icon color='orange' textAlign='center'>
-          <Icon name='puzzle piece' color='orange' />
-          Signup for DevChat
-        </Header>
+      <Grid.Column style={{ width: '60vw' }}>
         <Form onSubmit={handleSubmit} size='large'>
-          <Segment stacked>
-            <Form.Input
-              fluid
-              name='user'
-              icon='user'
-              iconPosition='left'
-              placeholder='Username'
-              onChange={usernameChange}
-              value={username}
-              type='text'
-            />
-            <Form.Input
-              fluid
-              name='email'
-              icon='mail'
-              iconPosition='left'
-              placeholder='Email Address'
-              onChange={emailChange}
-              value={email}
-              className={handleInputError('email')}
-              type='email'
-            />
-            <Form.Input
-              fluid
-              name='password'
-              icon='lock'
-              iconPosition='left'
-              placeholder='Password'
-              onChange={passwordChange}
-              value={password}
-              className={handleInputError('password')}
-              type='password'
-            />
-            <Form.Input
-              fluid
-              name='passwordConfirmation'
-              icon='repeat'
-              iconPosition='left'
-              placeholder='Password Confirmation'
-              onChange={passwordConfirmationChange}
-              value={passwordConfirmation}
-              className={handleInputError('password')}
-              type='password'
-            />
+          <Form.Input
+            fluid
+            name='user'
+            icon='user'
+            iconPosition='left'
+            placeholder='ユーザー名'
+            onChange={usernameChange}
+            value={username}
+            type='text'
+          />
+          <Form.Input
+            fluid
+            name='email'
+            icon='mail'
+            iconPosition='left'
+            placeholder='メールアドレス'
+            onChange={emailChange}
+            value={email}
+            className={handleInputError('email')}
+            type='email'
+          />
+          <Form.Input
+            fluid
+            name='password'
+            icon='lock'
+            iconPosition='left'
+            placeholder='パスワード'
+            onChange={passwordChange}
+            value={password}
+            className={handleInputError('password')}
+            type='password'
+          />
+          <Form.Input
+            fluid
+            name='passwordConfirmation'
+            icon='repeat'
+            iconPosition='left'
+            placeholder='パスワード再入力'
+            onChange={passwordConfirmationChange}
+            value={passwordConfirmation}
+            className={handleInputError('password')}
+            type='password'
+          />
 
-            <Button
-              disabled={loading}
-              className={loading ? 'loading' : ''}
-              color='orange'
-              fluid
-              size='large'
-            >
-              Submit
-            </Button>
-          </Segment>
+          <Button
+            disabled={loading}
+            className={loading ? 'loading' : ''}
+            color='green'
+            fluid
+            size='large'
+          >
+            新規登録
+          </Button>
         </Form>
         {errors.length > 0 && (
           <Message error>
@@ -206,10 +191,6 @@ const Signup = () => {
             {displayErrors()}
           </Message>
         )}
-        <Message>
-          Already a user?
-          <Link to='/login'>Login</Link>
-        </Message>
       </Grid.Column>
     </Grid>
   );

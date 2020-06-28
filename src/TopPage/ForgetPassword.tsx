@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import firebase from '../config/firebase';
-import { Link } from 'react-router-dom';
 import {
   Grid,
   Form,
@@ -10,11 +9,23 @@ import {
   Icon,
   Message,
 } from 'semantic-ui-react';
+import { useDispatch } from 'react-redux';
+import {clearUser} from '../re-ducks/user/actions'
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [completeShow, setCompleteShow] = useState(false);
+  const dispatch=useDispatch()
+
+  const handleClick=()=>{
+    firebase
+      .auth()
+      .signOut()
+      .then(() => console.log('signed out'));
+    dispatch(clearUser())
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     firebase
@@ -28,25 +39,25 @@ const ForgetPassword = () => {
   };
 
   return completeShow ? (
-    <Grid textAlign='center' verticalAlign='middle' style={{marginTop: 150}}>
+    <Grid textAlign='center' verticalAlign='middle' style={{ marginTop: 200 }}>
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as='h2' icon color='green' textAlign='center'>
-          <Icon name='react' color='green' />
-          Reset Password
+          <Icon name='user' color='green' />
+          パスワード再設定
         </Header>
-        <Segment stacked>Sent to your Email</Segment>
+        <Segment stacked>メールが送信されました、確認してください</Segment>
       </Grid.Column>
       <Message>
-            <Link to='/signup'> Signup</Link> /
-            <Link to='/signin'> Signin</Link>
-          </Message>
+        <Icon name='redo' />
+        <p style={{color: 'blue',cursor: 'pointer'}} onClick={handleClick}>戻る</p>
+      </Message>
     </Grid>
   ) : (
-    <Grid textAlign='center' verticalAlign='middle' style={{marginTop: 100}}>
+    <Grid textAlign='center' verticalAlign='middle' style={{ paddingTop: 200 }}>
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as='h2' icon color='green' textAlign='center'>
-          <Icon name='react' color='green' />
-          Reset Password
+          <Icon name='user' color='green' />
+          パスワード再設定
         </Header>
         <Form onSubmit={handleSubmit} size='large'>
           <Segment stacked>
@@ -55,7 +66,7 @@ const ForgetPassword = () => {
               name='email'
               icon='mail'
               iconPosition='left'
-              placeholder='Email Address'
+              placeholder='メールアドレス'
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
@@ -69,13 +80,14 @@ const ForgetPassword = () => {
               fluid
               size='large'
             >
-              Submit
+              送る
             </Button>
           </Segment>
         </Form>
-          <Message>
-            <Link to='/auth'>Return</Link>
-          </Message>
+        <Message>
+          <Icon name='redo' />
+          <p style={{color: 'blue',cursor: 'pointer'}} onClick={handleClick}>戻る</p>
+        </Message>
       </Grid.Column>
     </Grid>
   );
