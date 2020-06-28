@@ -36,7 +36,7 @@ const Gragh = ({ record }: any) => {
   return (
     <>
       <h1>学習記録</h1>
-      <div style={{ width: '50%', margin: '0 auto', marginTop: 150 }}>
+      {record.length>0?<div style={{ width: '50%', margin: '0 auto', marginTop: 150 }}>
         <LineChart width={700} height={500} data={data} >
           <CartesianGrid strokeDasharray='3 3' />
           <XAxis dataKey='日付' interval='preserveStartEnd' />
@@ -49,7 +49,7 @@ const Gragh = ({ record }: any) => {
             activeDot={{ r: 5 }}
           />
         </LineChart>
-      </div>
+      </div>:<h1>記録がまだありません</h1>}
     </>
   );
 };
