@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, TextArea, Select } from 'semantic-ui-react';
+import { Button, Form, Input, TextArea, Select, Message } from 'semantic-ui-react';
 import firebase from './../config/firebase';
 import shortid from 'shortid';
 import {categoryOptions,languageOptions} from '../UI/SelectOptions'
@@ -10,10 +10,11 @@ const CreateArticle = ({ user, article }: any) => {
   const [categoryValue, setCategoryValue] = useState('');
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
+  const [error,setError]=useState('')
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (user) {
+    if (user&&title&&text) {
       const newArticle = {
         title: title,
         text: text,
@@ -36,10 +37,12 @@ const CreateArticle = ({ user, article }: any) => {
       setCategoryValue('')
       setLanguageValue('')
       setForm(false)
+      setError('')
+    }else{
+      setError('タイトルとテキストを入力してください')
     }
   };
 
-  
 
   return (
     <React.Fragment>
@@ -73,6 +76,7 @@ const CreateArticle = ({ user, article }: any) => {
             />
             <Button>作成</Button>
           </Form>
+            {error&&<Message negative>{error}</Message>}
         </React.Fragment>
       ) : (
         <Button onClick={() => setForm(true)}>記事を書く</Button>

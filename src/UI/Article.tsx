@@ -11,11 +11,13 @@ import {
   Select,
   TextArea,
   Icon,
+  Segment,
 } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 import firebase from './../config/firebase';
 import { categoryOptions, languageOptions } from './SelectOptions';
 import ModalComponent from './ModalComponent';
+import shortid from 'shortid';
 
 const Article = ({ el, article }: any) => {
   const user = useSelector((state: any) => state.user.currentUser);
@@ -28,6 +30,8 @@ const Article = ({ el, article }: any) => {
   const [unFavorite, setUnFavorite] = useState(false);
   const [favorite, setFavorite] = useState<any>([]);
   const [alert, setAlert] = useState(false);
+  const [commentText, setCommentText] = useState('');
+  const [error, setError] = useState('');
   const [usersRef] = useState(firebase.firestore().collection('users'));
   const [articlesRef] = useState(firebase.firestore().collection('articles'));
 
@@ -122,6 +126,89 @@ const Article = ({ el, article }: any) => {
     }
   };
 
+  const sendComment = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (commentText && user) {
+      const date = new Date();
+      const y = date.getFullYear();
+      const mo = date.getMonth() + 1;
+      const d = date.getDate();
+      const h = date.getHours();
+      const mi = date.getMinutes();
+      const time = `${y}年${mo}月${d}日${h}時${mi}分`;
+      const newComment = {
+        name: user.displayName,
+        avatar: user.photoURL,
+        text: commentText,
+        time: time,
+        id: shortid.generate(),
+      };
+      const newArticle = article.map((element: any) => {
+        if (el.id === element.id) {
+          element.comment.push(newComment);
+        }
+        return element;
+      });
+
+      articlesRef
+        .doc(el.uid)
+        .update({
+          article: newArticle,
+        })
+        .then(() => {
+          setCommentText('');
+          setError('');
+        });
+    } else {
+      setError('コメントを入力してください');
+    }
+  };
+
+  const deleteComment = (id: string) => {
+    const newArticle = article.map((element: any) => {
+      element.comment = element.comment.filter((el: any) => {
+        return el.id !== id;
+      });
+      return element;
+    });
+    console.log(newArticle)
+    articlesRef
+      .doc(el.uid)
+      .update({
+        article: newArticle,
+      })
+      .then(() => {
+        console.log('delete');
+      })
+      .catch((err: string) => {
+        console.error(err);
+      });
+  };
+
+  const changeComment = (id: string, text: string) => {
+    const newArticle = article.map((element: any) => {
+      element.comment.map((el: any) => {
+        if (el.id === id) {
+          el.text = text;
+        }
+        return el;
+      });
+      return element;
+    });
+    articlesRef
+      .doc(el.uid)
+      .update({
+        article: newArticle,
+      })
+      .then(() => {
+        console.log('change');
+      })
+      .catch((err: string) => {
+        console.error(err);
+      });
+  };
+
   return (
     <Message onClick={() => setModal(true)}>
       <p>{el.title}</p>
@@ -179,7 +266,28 @@ const Article = ({ el, article }: any) => {
                 <ModalComponent text='削除' clickEvent={deleteArticle} />
               </>
             )}
-            <Comment />
+            <Form onSubmit={sendComment}>
+              <Input
+                value={commentText}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setCommentText(e.target.value)
+                }
+              />
+              <Button>送信</Button>
+            </Form>
+            {error && <Message negative>{error}</Message>}
+            <Segment>
+              {el.comment.length > 0 &&
+                el.comment.map((el: any, i: number) => (
+                  <Comment
+                    key={i.toString()}
+                    comment={el}
+                    user={user}
+                    changeComment={changeComment}
+                    deleteComment={deleteComment}
+                  />
+                ))}
+            </Segment>
           </React.Fragment>
         )}
       </Modal>

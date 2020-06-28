@@ -1,11 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { Dimmer, Loader } from 'semantic-ui-react';
 
 const Spinner = () => {
   return (
-    <div>
-      
-    </div>
-  )
-}
+    <Dimmer active>
+      <Loader size='huge' content={'Loading...'} />
+    </Dimmer>
+  );
+};
 
-export default Spinner
+export default Spinner;
