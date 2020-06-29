@@ -8,52 +8,74 @@ const Comment = ({ comment, user, changeComment, deleteComment }: any) => {
   const [error, setError] = useState('');
 
   const handleClick = () => {
-    if(text){
-      changeComment(comment.id, text)
-      setModal(false)
-      setError('')
-    }else{
-      setError('テキストを入力してください')
+    if (text) {
+      changeComment(comment.id, text);
+      setModal(false);
+      setError('');
+    } else {
+      setError('テキストを入力してください');
     }
-  }
+  };
 
   return (
-    <>
-      <Image avatar src={comment && comment.avatar} />
-      {comment && comment.name}
-      {comment && comment.time}
+    <div style={{ width: '100%', marginBottom: 10 }}>
       <Message>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
+            <Image avatar src={comment && comment.avatar} />
+            {comment && comment.name}
+          </div>
+          {comment && comment.time}
+        </div>
+        <br />
         {comment && comment.text}
         {user.photoURL === comment.avatar && (
-          <>
-            <Button onClick={() => setModal(true)}>
-              編集
-            </Button>
-            <ModalComponent clickEvent={() => deleteComment(comment.id)} text='削除'/>
-          </>
+          <div style={{ textAlign: 'right' }}>
+            <Icon
+              name='write'
+              onClick={() => setModal(true)}
+              style={{ cursor: 'pointer', marginRight: 5 }}
+            />
+            <ModalComponent
+              clickEvent={() => deleteComment(comment.id)}
+              text='削除'
+              tiny
+            />
+          </div>
         )}
       </Message>
-      <Modal onClose={() => setModal(false)} open={modal}>
+      <Modal
+        size='small'
+        onClose={() => setModal(false)}
+        open={modal}
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translateY(-50%) translateX(-50%)',
+        }}
+      >
         <Modal.Content>
           <Input
             focus
             value={text}
+            style={{ width: '100%' }}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setText(e.target.value)
             }
           />
-          {error&&<Message>{error}</Message>}
+          {error && <Message>{error}</Message>}
         </Modal.Content>
         <Modal.Actions>
-          <Button color='red' onClick={() => setModal(false)}>
-            <Icon name='remove' /> No
-          </Button>
           <Button color='green' onClick={handleClick}>
-            <Icon name='checkmark' /> Yes
+            <Icon name='checkmark' /> はい
+          </Button>
+          <Button color='red' onClick={() => setModal(false)}>
+            <Icon name='remove' /> いいえ
           </Button>
         </Modal.Actions>
       </Modal>
-    </>
+    </div>
   );
 };
 

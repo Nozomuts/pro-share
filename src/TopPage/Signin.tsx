@@ -117,7 +117,6 @@ const Signin = () => {
       });
   };
 
-
   const googleLogin = () => {
     setSpinner(true);
     firebase
@@ -184,23 +183,38 @@ const Signin = () => {
             color='green'
             fluid
             size='large'
-            style={{marginBottom: 10}}
+            style={{ marginBottom: 30 }}
           >
             ログイン
           </Button>
         </Form>
-        <Button color='twitter' onClick={twitterLogin} fluid size='large' style={{marginBottom: 10}}>
-          <Icon name='twitter' />
-          Twitterでログイン
-        </Button>
-        <Button color='facebook' onClick={facebookLogin} fluid size='large' style={{marginBottom: 10}}>
-          <Icon name='facebook' />
-          Facebookでログイン
-        </Button>
-        <Button color='red' onClick={googleLogin} fluid size='large' style={{marginBottom: 10}}>
-          <Icon name='google' />
-          Googleでログイン
-        </Button>
+        <p style={{textAlign: 'center'}}>SNSログイン</p>
+        <div style={{display: 'flex',justifyContent: 'space-evenly'}}>
+          <Button
+            color='twitter'
+            onClick={twitterLogin}
+            fluid
+            icon='twitter'
+            size='large'
+            style={{ marginBottom: 10,borderRadius: '50%',height: 50,width: 50 }}
+          />
+          <Button
+            color='facebook'
+            onClick={facebookLogin}
+            fluid
+            icon='facebook'
+            size='large'
+            style={{ marginBottom: 10,borderRadius: '50%',height: 50,width: 50 }}
+          />
+          <Button
+            color='red'
+            onClick={googleLogin}
+            fluid
+            icon='google'
+            size='large'
+            style={{ marginBottom: 10,borderRadius: '50%',height: 50,width: 50 }}
+          />
+        </div>
         {errors.length > 0 && (
           <Message error>
             <h3>Error</h3>

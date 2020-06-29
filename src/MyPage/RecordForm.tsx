@@ -6,13 +6,14 @@ import {
   Message,
   Button,
   Select,
-  Modal
+  Modal,
+  Icon,
 } from 'semantic-ui-react';
 import firebase from '../config/firebase';
 import shortid from 'shortid';
 import { hourOptions, minOptions } from '../UI/SelectOptions';
 
-const RecordForm = ({ user, record }: any) => {
+const RecordForm = ({ user, record, open }: any) => {
   const [title, setTitle] = useState('');
   const [hour, setHour] = useState<any>('');
   const [min, setMin] = useState<any>('');
@@ -42,7 +43,7 @@ const RecordForm = ({ user, record }: any) => {
       record.push(newItem);
       firebase.firestore().collection('records').doc(user.uid).set({
         record: record,
-        open: false,
+        open: open,
         name: user.displayName,
         avatar: user.photoURL,
       });
@@ -59,18 +60,18 @@ const RecordForm = ({ user, record }: any) => {
     <>
       <Button
         style={{
-          width: '60vw',
-          margin: '30px 20vw',
+          width: '90vw',
+          margin: '30px auto',
+          maxWidth: 500,
+          display: 'block',
         }}
         onClick={() => setModal(true)}
       >
         ＋追加する
       </Button>
-      <Modal
-          style={{ width: '90vw', margin: '0 auto', maxWidth: 700 }}
-          onClose={() => setModal(false)}
-          open={modal}
-        >
+      <Modal size='small' onClose={() => setModal(false)} open={modal}>
+        <Modal.Header>勉強記録追加</Modal.Header>
+        <Modal.Content>
           <Form
             onSubmit={handleSubmit}
             style={{
@@ -103,7 +104,7 @@ const RecordForm = ({ user, record }: any) => {
                 justifyContent: 'space-evenly',
                 flexWrap: 'wrap',
                 alignItems: 'center',
-                marginBottom: 10,
+                marginBottom: 50,
               }}
             >
               <Select
@@ -129,14 +130,31 @@ const RecordForm = ({ user, record }: any) => {
             </div>
 
             {error && <Message negative>{error}</Message>}
-            <div style={{ display: 'flex', justifyContent: 'center', maxWidth: 600,width: '100%' }}>
-              <Button style={{width: '50%'}}>追加</Button>
-              <Button style={{width: '50%'}} type='button' onClick={() => setModal(false)}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                maxWidth: 600,
+                width: '100%',
+              }}
+            >
+              <Button color='green' style={{ width: '50%' }}>
+                <Icon name='check' />
+                追加
+              </Button>
+              <Button
+                style={{ width: '50%' }}
+                type='button'
+                onClick={() => setModal(false)}
+                color='red'
+              >
+                <Icon name='remove' />
                 キャンセル
               </Button>
             </div>
           </Form>
-        </Modal>
+        </Modal.Content>
+      </Modal>
     </>
   );
 };

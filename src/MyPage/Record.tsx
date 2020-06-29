@@ -52,14 +52,14 @@ const Record = ({ user }: any) => {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'center', height: 40 }}>
+      <div style={{ display: 'flex', justifyContent: 'center', height: 40,marginBottom: 30 }}>
         <h1 style={{ marginRight: 10 }}>学習記録</h1>
         <Button onClick={changeOpen}>
           {open ? '非公開にする' : '公開する'}
         </Button>
       </div>
       <Gragh record={synthesisRecord} />
-      <RecordForm user={user} record={synthesisRecord} />
+      <RecordForm open={open} user={user} record={synthesisRecord} />
       {error && <Message negative>{error}</Message>}
       <MediaQuery query='(max-width: 670px)'>
         <div style={{ width: '90vw', margin: '10px 5vw'}}>
@@ -91,7 +91,7 @@ const Record = ({ user }: any) => {
         )}
       </MediaQuery>
       <MediaQuery query='(min-width: 671px)'>
-        <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Daily record={dailyRecord} />
           <Synthesis record={synthesisRecord} />
         </div>

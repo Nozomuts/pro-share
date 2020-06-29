@@ -29,7 +29,7 @@ const WriteArticle = () => {
 
   return (
     <>
-      <div style={{ margin: '100px 0' }}>
+      <div style={{ marginTop: 100 , paddingBottom: 100 }}>
         <Header activeItem='article' />
         <CreateArticle user={user} article={article} />
         <ArticleList article={article} />

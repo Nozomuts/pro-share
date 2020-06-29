@@ -81,44 +81,46 @@ const Ranking = () => {
 
   return (
     <>
-      <div style={{ marginTop: 100, marginBottom: 100 }}></div>
-      <Header activeItem='ranking' />
-      <MediaQuery query='(min-width: 671px)'>
-        <div style={{ display: 'flex',justifyContent: 'space-evenly' }}>
-          <div>
-            <h1>デイリーランキング</h1>
-            <RankingRecord ranking={dailyRanking} />
+      <div style={{ marginTop: 100, paddingBottom: 100 }}>
+        <Header activeItem='ranking' />
+        <MediaQuery query='(min-width: 671px)'>
+          <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+            <div>
+              <h1>デイリーランキング</h1>
+              <RankingRecord ranking={dailyRanking} />
+            </div>
+            <div>
+              <h1>総合ランキング</h1>
+              <RankingRecord ranking={synthesisRanking} />
+            </div>
           </div>
-          <div>
-            <h1>総合ランキング</h1>
+        </MediaQuery>
+        <MediaQuery query='(max-width: 670px)'>
+          <div style={{ width: '90vw', margin: '10px 5vw' }}>
+            <h1>勉強時間ランキング</h1>
+            <Button
+              style={{ width: '45vw', margin: 0 }}
+              active={!toggle}
+              onClick={() => setToggle(false)}
+            >
+              デイリー
+            </Button>
+            <Button
+              style={{ width: '45vw', margin: 0 }}
+              active={toggle}
+              onClick={() => setToggle(true)}
+            >
+              合計
+            </Button>
+          </div>
+          {toggle ? (
             <RankingRecord ranking={synthesisRanking} />
-          </div>
-        </div>
-      </MediaQuery>
-      <MediaQuery query='(max-width: 670px)'>
-        <div style={{ width: '90vw',margin: '10px 5vw' }}>
-          <Button
-            style={{ width: '45vw', margin: 0 }}
-            active={!toggle}
-            onClick={() => setToggle(false)}
-          >
-            デイリー
-          </Button>
-          <Button
-            style={{ width: '45vw', margin: 0 }}
-            active={toggle}
-            onClick={() => setToggle(true)}
-          >
-            合計
-          </Button>
-        </div>
-        {toggle ? (
-          <RankingRecord ranking={synthesisRanking} />
-        ) : (
-          <RankingRecord ranking={dailyRanking} />
-        )}
-        <Footer activeItem='ranking' />
-      </MediaQuery>
+          ) : (
+            <RankingRecord ranking={dailyRanking} />
+          )}
+          <Footer activeItem='ranking' />
+        </MediaQuery>
+      </div>
     </>
   );
 };

@@ -43,7 +43,7 @@ const Synthesis = ({ record }: any) => {
   return (
     <>
       <MediaQuery query='(min-width: 671px)'>
-        <div style={{ width: '35vw' , margin: 10}}>{jsx}</div>
+        <div style={{ width: '35vw' , margin: '5vw',maxWidth:400}}>{jsx}</div>
       </MediaQuery>
       <MediaQuery query='(max-width: 670px)'>
         <div style={{ width: '90vw', margin: '10px 5vw' }}>{jsx}</div>

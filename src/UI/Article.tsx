@@ -76,7 +76,9 @@ const Article = ({ el, article }: any) => {
   };
 
   const deleteArticle = () => {
-    const newArticle = article.filter((element: any) => element.id !== el.id);
+    const newArticle = article
+      .filter((element: any) => element.uid === user.uid)
+      .filter((element: any) => element.id !== el.id);
     articlesRef
       .doc(user.uid)
       .update({
@@ -143,12 +145,14 @@ const Article = ({ el, article }: any) => {
         time: time,
         id: shortid.generate(),
       };
-      const newArticle = article.map((element: any) => {
-        if (el.id === element.id) {
-          element.comment.push(newComment);
-        }
-        return element;
-      });
+      const newArticle = article
+        .filter((element: any) => element.uid === el.uid)
+        .map((element: any) => {
+          if (el.id === element.id) {
+            element.comment.push(newComment);
+          }
+          return element;
+        });
 
       articlesRef
         .doc(el.uid)
@@ -165,12 +169,12 @@ const Article = ({ el, article }: any) => {
   };
 
   const deleteComment = (id: string) => {
-    const newArticle = article.map((element: any) => {
-      element.comment = element.comment.filter((el: any) => {
-        return el.id !== id;
+    const newArticle = article
+      .filter((element: any) => element.uid === el.uid)
+      .map((element: any) => {
+        element.comment = element.comment.filter((el: any) => el.id !== id);
+        return element;
       });
-      return element;
-    });
     console.log(newArticle);
     articlesRef
       .doc(el.uid)
@@ -186,15 +190,17 @@ const Article = ({ el, article }: any) => {
   };
 
   const changeComment = (id: string, text: string) => {
-    const newArticle = article.map((element: any) => {
-      element.comment.map((el: any) => {
-        if (el.id === id) {
-          el.text = text;
-        }
-        return el;
+    const newArticle = article
+      .filter((element: any) => element.uid === el.uid)
+      .map((element: any) => {
+        element.comment.map((el: any) => {
+          if (el.id === id) {
+            el.text = text;
+          }
+          return el;
+        });
+        return element;
       });
-      return element;
-    });
     articlesRef
       .doc(el.uid)
       .update({
@@ -209,111 +215,25 @@ const Article = ({ el, article }: any) => {
   };
 
   return (
-    <Message
-      onClick={() => setModal(true)}
-      style={{ width: '90vw', margin: '0 5vw' }}
-    >
-      <p>{el.title}</p>
-      <p>
-        書いた人：
-        <Image avatar src={el.avatar} /> {el.name}
-        {unFavorite && '(お気に入り削除済み)'}
-      </p>
-      <Modal open={modal} onClose={() => setModal(false)}>
-        {edit ? (
-          <Form onSubmit={handleSubmit}>
-            <Input
-              value={title}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setTitle(e.target.value)
-              }
-            />
-            <TextArea
-              value={text}
-              onChange={(e: any) => setText(e.target.value)}
-            />
-            <Select
-              placeholder='選択してください'
-              value={categoryValue}
-              options={categoryOptions}
-              onChange={(e: any, { value }: any) => setCategoryValue(value)}
-            />
-            <Select
-              search
-              selection
-              value={languageValue}
-              options={languageOptions}
-              onChange={(e: any, { value }: any) => setLanguageValue(value)}
-              placeholder='Select Language'
-            />
-            <Button>変更</Button>
-            <Button type='button' onClick={() => setEdit(false)}>
-              キャンセル
-            </Button>
-          </Form>
-        ) : (
-          <div style={{width: '80vw', margin: '10px 5vw'}}>
-            <h1>
-              {el.title}{' '}
-              {favorite.includes(el.id) ? (
-                <Icon
-                  onClick={changeFavorite}
-                  size='small'
-                  name='star'
-                  color='yellow'
-                  style={{lineHeight: '36px'}}
-                />
-              ) : (
-                <Icon
-                  onClick={changeFavorite}
-                  size='small'
-                  name='star outline'
-                  color='black'
-                  style={{lineHeight: '36px'}}
-                />
-              )}
-            </h1>
-            <p>
-              書いた人：
-              <Image avatar src={el.avatar} /> {el.name}
-              {unFavorite && '(お気に入り削除済み)'}
-            </p>
-            <Message>{el.text}</Message>
-            <p>カテゴリー１：{el.category}</p>
-            <p>カテゴリー２：{el.language}</p>
-            {user.uid === el.uid && (
-              <>
-                <Button onClick={() => setEdit(true)}>編集</Button>
-                <ModalComponent text='削除' clickEvent={deleteArticle} />
-              </>
-            )}
-            <Form onSubmit={sendComment}>
-              <Input
-                value={commentText}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setCommentText(e.target.value)
-                }
-              />
-              <Button>送信</Button>
-            </Form>
-            {error && <Message negative>{error}</Message>}
-            <Segment>
-              <p>コメント：</p>
-              {el.comment.length > 0 ?
-                el.comment.map((el: any, i: number) => (
-                  <Comment
-                    key={i.toString()}
-                    comment={el}
-                    user={user}
-                    changeComment={changeComment}
-                    deleteComment={deleteComment}
-                  />
-                )): <p>コメントはありません</p>}
-            </Segment>
-          </div>
-        )}
-      </Modal>
-      <Modal onClose={() => setAlert(false)} open={alert}>
+    <>
+      <Message
+        onClick={() => setModal(true)}
+        style={{ width: '90vw', margin: '10px auto', maxWidth: 800 }}
+      >
+        <h1>
+          {el.title}
+          {unFavorite && '(お気に入り解除済み)'}
+        </h1>
+        <p>
+          書いた人：
+          <Image avatar src={el.avatar} /> {el.name}
+        </p>
+      </Message>
+      <Modal
+        onClose={() => setAlert(false)}
+        open={alert}
+        style={{ width: '90vw', margin: '10px auto', maxWidth: 600 }}
+      >
         <Modal.Content>
           <p>ページを移動すると変更が反映されます</p>
         </Modal.Content>
@@ -323,7 +243,181 @@ const Article = ({ el, article }: any) => {
           </Button>
         </Modal.Actions>
       </Modal>
-    </Message>
+      <Modal style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translateY(-50%) translateX(-50%)',
+        }} open={edit} onClose={() => setEdit(false)} size='small'>
+        <Modal.Header>記事編集</Modal.Header>
+        <Form
+          style={{
+            width: '80vw',
+            margin: '30px auto',
+            maxWidth: 600,
+            display: 'flex',
+            flexDirection: 'column',
+            alignContent: 'center',
+          }}
+          onSubmit={handleSubmit}
+        >
+          <Input
+            style={{ width: '100%', marginBottom: 10 }}
+            placeholder='タイトルを入力'
+            value={title}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setTitle(e.target.value)
+            }
+          />
+          <TextArea
+            style={{ width: '100%', marginBottom: 10 }}
+            placeholder='テキストを入力'
+            value={text}
+            rows={15}
+            onChange={(e: any) => setText(e.target.value)}
+          />
+          <div style={{ width: '100%', marginBottom: 10 }}>
+            <Select
+              placeholder='選択してください'
+              value={categoryValue}
+              options={categoryOptions}
+              onChange={(e: any, { value }: any) => setCategoryValue(value)}
+              style={{ marginRight: '10px' }}
+            />
+            <Select
+              value={languageValue}
+              options={languageOptions}
+              onChange={(e: any, { value }: any) => setLanguageValue(value)}
+              placeholder='選択してください'
+            />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              maxWidth: 600,
+              width: '100%',
+            }}
+          >
+            <Button color='green' style={{ width: '50%' }}>
+              <Icon name='check' />
+              変更
+            </Button>
+            <Button
+              style={{ width: '50%' }}
+              type='button'
+              color='red'
+              onClick={() => setEdit(false)}
+            >
+              <Icon name='remove' />
+              キャンセル
+            </Button>
+          </div>
+        </Form>
+      </Modal>
+      <Modal open={modal} onClose={() => setModal(false)} size='small'>
+        <div
+          style={{
+            width: '80vw',
+            margin: '30px auto',
+            maxWidth: 600,
+            display: 'flex',
+            flexDirection: 'column',
+            alignContent: 'center',
+          }}
+        >
+          <Modal.Header style={{ marginBottom: 10 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <h1 style={{ width: '100%', marginBottom: 10 }}>
+                {favorite.includes(el.id) ? (
+                  <Icon
+                    onClick={changeFavorite}
+                    size='small'
+                    name='star'
+                    color='yellow'
+                    style={{ lineHeight: '36px' }}
+                  />
+                ) : (
+                  <Icon
+                    onClick={changeFavorite}
+                    size='small'
+                    name='star outline'
+                    color='black'
+                    style={{ lineHeight: '36px' }}
+                  />
+                )}{' '}
+                {el.title}
+              </h1>
+              <Icon
+                name='remove'
+                style={{ cursor: 'pointer' }}
+                onClick={() => setModal(false)}
+              />
+            </div>
+            <p style={{ width: '100%', marginBottom: 10 }}>
+              書いた人：
+              <Image avatar src={el.avatar} /> {el.name}
+              {unFavorite && '(お気に入り削除済み)'}
+            </p>
+          </Modal.Header>
+          <Modal.Content scrolling>
+            <Message style={{ width: '100%', marginBottom: 10 }}>
+              {el.text}
+            </Message>
+          </Modal.Content>
+          <div style={{ width: '100%', marginBottom: 10 }}>
+            <p>カテゴリー１：{el.category}</p>
+            <p>カテゴリー２：{el.language}</p>
+          </div>
+          <Modal.Content scrolling style={{marginBottom: 20}}>
+            <Segment>
+              <p>コメント：(Enterキーで送信)</p>
+              <Form
+                onSubmit={sendComment}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: '100%',
+                  margin: '10px auto',
+                }}
+              >
+                <Input
+                  value={commentText}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setCommentText(e.target.value)
+                  }
+                  placeholder='コメントを入力してください'
+                  style={{ width: '100%' }}
+                />
+              </Form>
+              {error && <Message negative>{error}</Message>}
+              {el.comment.length > 0 ? (
+                el.comment.map((el: any, i: number) => (
+                  <Comment
+                    key={i.toString()}
+                    comment={el}
+                    user={user}
+                    changeComment={changeComment}
+                    deleteComment={deleteComment}
+                  />
+                ))
+              ) : (
+                <p>コメントはありません</p>
+              )}
+            </Segment>
+          </Modal.Content>
+          {user.uid === el.uid && (
+            <div style={{ textAlign: 'right', marginBottom: 30 }}>
+              <Button onClick={() => setEdit(true)}>
+                <Icon name='write' />
+                編集
+              </Button>
+              <ModalComponent text='削除' clickEvent={deleteArticle} />
+            </div>
+          )}
+        </div>
+      </Modal>
+    </>
   );
 };
 

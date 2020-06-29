@@ -14,7 +14,7 @@ const Search = ({searchItem,setSearchItem}:any) => {
 
 
   return (
-    <div style={{width: '90vw', margin: '10px 5vw', marginBottom: 50}}>
+    <div style={{width: '90vw', margin: '10px auto', maxWidth: 800, marginBottom: 50}}>
       検索：<Input
           loading={searchLoading}
           value={searchItem}

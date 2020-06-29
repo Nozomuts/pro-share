@@ -4,7 +4,7 @@ import { categoryOptions, languageOptions } from '../UI/SelectOptions';
 
 const Category = ({ category, language, setCategory, setLanguage }: any) => {
   return (
-    <div style={{ width: '90vw', margin: '10px 5vw' }}>
+    <div style={{ width: '90vw', margin: '10px auto', maxWidth: 800 }}>
       <div>
         カテゴリー１：
         <Select

@@ -50,21 +50,21 @@ const ColorPanel = () => {
 
   return (
     <>
-      <Button icon='pencil' size='small' color='blue' onClick={()=>setModal(true)} />
-      <Modal basic open={modal} onClose={()=>setModal(false)}>
-        <Modal.Header>Choose App Colors</Modal.Header>
+      <Button style={{ width: '80vw', maxWidth: 400,marginBottom: 10 }} onClick={()=>setModal(true)}>カラー変更</Button>
+      <Modal open={modal} style={{ width: 320 }} onClose={()=>setModal(false)}>
+        <Modal.Header>カラー変更</Modal.Header>
         <Modal.Content>
           <Segment>
             <Label content='color'/>
-            <SwatchesPicker color={color} onChange={changeColor} />
+            <SwatchesPicker width={250} color={color} onChange={changeColor}/>
           </Segment>
         </Modal.Content>
-        <Modal.Actions>
-          <Button color='green' inverted onClick={handleSaveColors}>
-            <Icon name='checkmark'/> Save Colors
+        <Modal.Actions style={{display: 'flex' }}>
+          <Button color='green' onClick={handleSaveColors}>
+            <Icon name='checkmark'/> 保存
           </Button>
-          <Button color='red' inverted onClick={()=>setModal(false)}>
-            <Icon name='remove'/> Cancel
+          <Button color='red' onClick={()=>setModal(false)}>
+            <Icon name='remove'/> キャンセル
           </Button>
         </Modal.Actions>
       </Modal>

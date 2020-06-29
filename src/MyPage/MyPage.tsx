@@ -29,7 +29,7 @@ const MyPage = () => {
 
   return (
     <>
-      <div style={{ marginTop: 100 ,marginBottom: 200 }}>
+      <div style={{ marginTop: 100 , paddingBottom: 100 }}>
         <Header activeItem='mypage' />
         <Record user={user} />
         <MediaQuery query='(max-width: 670px)'>

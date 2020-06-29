@@ -7,6 +7,7 @@ import {
   TextArea,
   Form,
   Select,
+  Icon,
 } from 'semantic-ui-react';
 import ModalComponent from './../UI/ModalComponent';
 import firebase from 'firebase';
@@ -63,78 +64,95 @@ const Task = ({ el, deleteRecord, record }: any) => {
         <p>説明：{el.detail}</p>
         <p>勉強時間：{`${el.hour}時間${el.min}分`}</p>
         <p>{el.time}</p>
-        <Button onClick={() => setModal(true)}>編集</Button>
-        <ModalComponent text='削除' clickEvent={() => deleteRecord(el.id)} />
-        <Modal
-          style={{ width: '90vw', margin: '0 auto', maxWidth: 700 }}
-          onClose={() => setModal(false)}
-          open={modal}
-        >
-          <Form
-            onSubmit={handleSubmit}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              width: '80vw',
-              maxWidth: 600,
-              margin: '10px auto',
-            }}
-          >
-            <Input
-              style={{ width: '100%', marginBottom: '10px' }}
-              placeholder='タイトルを入力'
-              value={title}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setTitle(e.target.value)
-              }
-            />
-            <TextArea
-              placeholder='詳細を入力'
-              style={{ width: '100%', marginBottom: '10px' }}
-              value={detail}
-              onChange={(e: any) => setDetail(e.target.value)}
-            />
-            <div
+        <div style={{ textAlign: 'right' }}>
+          <Button onClick={() => setModal(true)}><Icon name='write'/>編集</Button>
+          <ModalComponent text='削除' clickEvent={() => deleteRecord(el.id)} />
+        </div>
+        <Modal size='small' onClose={() => setModal(false)} open={modal}>
+          <Modal.Header>勉強記録追加</Modal.Header>
+          <Modal.Content>
+            <Form
+              onSubmit={handleSubmit}
               style={{
                 display: 'flex',
-                width: '100%',
-                justifyContent: 'space-evenly',
-                flexWrap: 'wrap',
+                flexDirection: 'column',
                 alignItems: 'center',
-                marginBottom: 10,
+                width: '80vw',
+                maxWidth: 600,
+                margin: '10px auto',
               }}
             >
-              <Select
-                placeholder='選択してください'
-                value={hour}
-                options={hourOptions}
-                onChange={(
-                  e: React.SyntheticEvent<HTMLElement, Event>,
-                  { value }: any
-                ) => setHour(value)}
+              <Input
+                style={{ width: '100%', marginBottom: '10px' }}
+                placeholder='タイトルを入力'
+                value={title}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setTitle(e.target.value)
+                }
               />
-              時間
-              <Select
-                placeholder='選択してください'
-                value={min}
-                options={minOptions}
-                onChange={(
-                  e: React.SyntheticEvent<HTMLElement, Event>,
-                  { value }: any
-                ) => setMin(value)}
+              <TextArea
+                placeholder='詳細を入力'
+                style={{ width: '100%', marginBottom: '10px' }}
+                value={detail}
+                onChange={(e: any) => setDetail(e.target.value)}
               />
-              分
-            </div>
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'space-evenly',
+                  flexWrap: 'wrap',
+                  alignItems: 'center',
+                  marginBottom: 50,
+                }}
+              >
+                <Select
+                  placeholder='選択してください'
+                  value={hour}
+                  options={hourOptions}
+                  onChange={(
+                    e: React.SyntheticEvent<HTMLElement, Event>,
+                    { value }: any
+                  ) => setHour(value)}
+                />
+                時間
+                <Select
+                  placeholder='選択してください'
+                  value={min}
+                  options={minOptions}
+                  onChange={(
+                    e: React.SyntheticEvent<HTMLElement, Event>,
+                    { value }: any
+                  ) => setMin(value)}
+                />
+                分
+              </div>
 
-            {error && <Message negative>{error}</Message>}
-            <div style={{ display: 'flex', justifyContent: 'center', maxWidth: 600,width: '100%' }}>
-              <Button style={{width: '50%'}}>変更</Button>
-              <Button style={{width: '50%'}} type='button' onClick={() => setModal(false)}>
-                キャンセル
-              </Button>
-            </div>
-          </Form>
+              {error && <Message negative>{error}</Message>}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  maxWidth: 600,
+                  width: '100%',
+                }}
+              >
+                <Button color='green' style={{ width: '50%' }}>
+                  <Icon name='check' />
+                  保存
+                </Button>
+                <Button
+                  style={{ width: '50%' }}
+                  type='button'
+                  onClick={() => setModal(false)}
+                  color='red'
+                >
+                  <Icon name='remove' />
+                  キャンセル
+                </Button>
+              </div>
+            </Form>
+          </Modal.Content>
         </Modal>
       </Message>
     </>

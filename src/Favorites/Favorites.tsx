@@ -47,8 +47,8 @@ const Favorites = () => {
   return (
     <>
       <Header activeItem='article' />
-      <div style={{ margin: '100px 0' }}>
-        <h1 style={{marginLeft: '5vw'}}><Icon color='yellow' name="star"/>お気に入り</h1>
+      <div style={{ marginTop: 100,  paddingBottom: 100 }}>
+        <h1 style={{width: '90vw', maxWidth: 800, margin: '0 auto', marginBottom: 50 }}><Icon color='yellow' name="star"/>お気に入り</h1>
         <ArticleList article={article} />
         <MediaQuery query='(max-width: 670px)'>
           <Footer activeItem='article' />

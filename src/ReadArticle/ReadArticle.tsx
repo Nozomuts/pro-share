@@ -50,7 +50,7 @@ const ReadArticle = () => {
 
   return (
     <>
-      <div style={{ margin: '100px 0' }}>
+      <div style={{ marginTop: 100, paddingBottom: 100 }}>
         <Header activeItem='article' />
         <Category
           category={category}
