@@ -20,26 +20,23 @@ const MyPage = () => {
           return { ...doc.data() };
         });
         if (userArray.filter((el: any) => el.id === user.uid).length > 0) {
-          const colorArray = userArray.filter(
-            (el: any) => el.id === user.uid
-          );
-          dispatch(
-            setColors(colorArray[0].color)
-          );
+          const colorArray = userArray.filter((el: any) => el.id === user.uid);
+          dispatch(setColors(colorArray[0].color));
         }
       });
     }
   }, [user]);
 
   return (
-    <React.Fragment>
-      <Header activeItem='mypage' />
-        <h1 style={{ marginTop: 200 }}>my page</h1>
+    <>
+      <div style={{ marginTop: 100 ,marginBottom: 200 }}>
+        <Header activeItem='mypage' />
         <Record user={user} />
-      <MediaQuery query='(max-width: 670px)'>
-        <Footer activeItem='mypage' />
-      </MediaQuery>
-    </React.Fragment>
+        <MediaQuery query='(max-width: 670px)'>
+          <Footer activeItem='mypage' />
+        </MediaQuery>
+      </div>
+    </>
   );
 };
 

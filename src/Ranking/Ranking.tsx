@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../UI/Header';
 import MediaQuery from 'react-responsive';
 import Footer from '../UI/Footer';
-import Daily from '../Ranking/Daily';
-import Synthesis from '../Ranking/Synthesis';
+import RankingRecord from './RankingRecord';
 import firebase from './../config/firebase';
 import { Button } from 'semantic-ui-react';
 
@@ -29,7 +28,11 @@ const Ranking = () => {
               .record.reduce((result: number, current: any) => {
                 return result + Number(current.min);
               }, 0);
-            return { name: doc.data().name,avatar: doc.data().avatar,time: hourSum + minSum };
+            return {
+              name: doc.data().name,
+              avatar: doc.data().avatar,
+              time: hourSum + minSum,
+            };
           });
         const newSynthesisArray = synthesisArray
           .sort((a: any, b: any) => {
@@ -77,30 +80,46 @@ const Ranking = () => {
   }, []);
 
   return (
-    <React.Fragment>
+    <>
+      <div style={{ marginTop: 100, marginBottom: 100 }}></div>
       <Header activeItem='ranking' />
-      <h1 style={{ marginTop: 200 }}>ranking</h1>
       <MediaQuery query='(min-width: 671px)'>
-        デイリー
-        <Daily ranking={dailyRanking} />
-        総合
-        <Synthesis ranking={synthesisRanking} />
+        <div style={{ display: 'flex',justifyContent: 'space-evenly' }}>
+          <div>
+            <h1>デイリーランキング</h1>
+            <RankingRecord ranking={dailyRanking} />
+          </div>
+          <div>
+            <h1>総合ランキング</h1>
+            <RankingRecord ranking={synthesisRanking} />
+          </div>
+        </div>
       </MediaQuery>
       <MediaQuery query='(max-width: 670px)'>
-        <Button active={toggle} onClick={() => setToggle(true)}>
-          合計
-        </Button>
-        <Button active={!toggle} onClick={() => setToggle(false)}>
-          デイリー
-        </Button>
+        <div style={{ width: '90vw',margin: '10px 5vw' }}>
+          <Button
+            style={{ width: '45vw', margin: 0 }}
+            active={!toggle}
+            onClick={() => setToggle(false)}
+          >
+            デイリー
+          </Button>
+          <Button
+            style={{ width: '45vw', margin: 0 }}
+            active={toggle}
+            onClick={() => setToggle(true)}
+          >
+            合計
+          </Button>
+        </div>
         {toggle ? (
-          <Synthesis ranking={synthesisRanking} />
+          <RankingRecord ranking={synthesisRanking} />
         ) : (
-          <Daily ranking={dailyRanking} />
+          <RankingRecord ranking={dailyRanking} />
         )}
         <Footer activeItem='ranking' />
       </MediaQuery>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -38,7 +38,7 @@ const ForgetPassword = () => {
         <Segment stacked>メールが送信されました、確認してください</Segment>
       </Grid.Column>
       <Message>
-      <Link to='/'>
+        <Link to='/'>
           <Icon name='redo' />
           戻る
         </Link>

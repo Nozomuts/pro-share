@@ -49,26 +49,26 @@ const ColorPanel = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Button icon='pencil' size='small' color='blue' onClick={()=>setModal(true)} />
       <Modal basic open={modal} onClose={()=>setModal(false)}>
         <Modal.Header>Choose App Colors</Modal.Header>
         <Modal.Content>
           <Segment>
-            <Label content='color' />
+            <Label content='color'/>
             <SwatchesPicker color={color} onChange={changeColor} />
           </Segment>
         </Modal.Content>
         <Modal.Actions>
           <Button color='green' inverted onClick={handleSaveColors}>
-            <Icon name='checkmark' /> Save Colors
+            <Icon name='checkmark'/> Save Colors
           </Button>
           <Button color='red' inverted onClick={()=>setModal(false)}>
-            <Icon name='remove' /> Cancel
+            <Icon name='remove'/> Cancel
           </Button>
         </Modal.Actions>
       </Modal>
-    </React.Fragment>
+    </>
   );
 };
 

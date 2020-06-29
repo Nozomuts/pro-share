@@ -17,3 +17,18 @@ export const categoryOptions = [
   { key: 'di', value: '日記', text: '日記' },
   { key: 'ot', value: 'その他', text: 'その他' },
 ];
+
+
+const _hourOptions = [];
+for (let i = 0; i < 24; i++) {
+  const array = { key: `${i}`, value: `${i}`, text: `${i}` };
+  _hourOptions.push(array);
+}
+export const hourOptions = _hourOptions;
+
+const _minOptions = [];
+for (let i = 0; i < 60; i++) {
+  const array = { key: `${i}`, value: `${i}`, text: `${i}` };
+  _minOptions.push(array);
+}
+export const minOptions = _minOptions;

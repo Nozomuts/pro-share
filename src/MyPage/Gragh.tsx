@@ -7,6 +7,7 @@ import {
   Legend,
   YAxis,
   Tooltip,
+  ResponsiveContainer,
 } from 'recharts';
 
 const Gragh = ({ record }: any) => {
@@ -16,7 +17,8 @@ const Gragh = ({ record }: any) => {
         (el: any) => el['日付'] === current.time.split('日')[0] + '日'
       );
       if (element) {
-        element['時間'] += Number(current.hour) + Number((current.min / 60).toFixed(1));
+        element['時間'] +=
+          Number(current.hour) + Number((current.min / 60).toFixed(1));
       } else {
         result.push({
           日付: current.time.split('日')[0] + '日',
@@ -35,21 +37,22 @@ const Gragh = ({ record }: any) => {
 
   return (
     <>
-      <h1>学習記録</h1>
-      {record.length>0?<div style={{ width: '50%', margin: '0 auto', marginTop: 150 }}>
-        <LineChart width={700} height={500} data={data} >
-          <CartesianGrid strokeDasharray='3 3' />
-          <XAxis dataKey='日付' interval='preserveStartEnd' />
-          <YAxis interval='preserveStartEnd' />
-          <Tooltip />
-          <Legend />
-          <Line
-            dataKey='時間'
-            stroke='#8884d8'
-            activeDot={{ r: 5 }}
-          />
-        </LineChart>
-      </div>:<h1>記録がまだありません</h1>}
+      {record.length > 0 ? (
+        <div style={{ width: '90%', height: 300 }}>
+          <ResponsiveContainer>
+            <LineChart width={700} height={500} data={data}>
+              <CartesianGrid strokeDasharray='3 3' />
+              <XAxis dataKey='日付' interval='preserveStartEnd' />
+              <YAxis interval='preserveStartEnd' />
+              <Tooltip />
+              <Legend />
+              <Line dataKey='時間' stroke='#8884d8' activeDot={{ r: 5 }} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      ) : (
+        <h2 style={{ textAlign: 'center' }}>記録がまだありません</h2>
+      )}
     </>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, TextArea, Select, Message } from 'semantic-ui-react';
+import { Button, Form, Input, TextArea, Select, Message, Icon } from 'semantic-ui-react';
 import firebase from './../config/firebase';
 import shortid from 'shortid';
 import {categoryOptions,languageOptions} from '../UI/SelectOptions'
@@ -45,9 +45,9 @@ const CreateArticle = ({ user, article }: any) => {
 
 
   return (
-    <React.Fragment>
+    <>
       {form ? (
-        <React.Fragment>
+        <div style={{width: '90vw', margin: '0 5vw'}}>
           <Button onClick={() => setForm(false)}>×閉じる</Button>
           <Form onSubmit={handleSubmit}>
             <Input
@@ -59,6 +59,7 @@ const CreateArticle = ({ user, article }: any) => {
             <TextArea
               value={text}
               onChange={(e: any) => setText(e.target.value)}
+              rows={15}
             />
             <Select
               placeholder='選択してください'
@@ -77,11 +78,11 @@ const CreateArticle = ({ user, article }: any) => {
             <Button>作成</Button>
           </Form>
             {error&&<Message negative>{error}</Message>}
-        </React.Fragment>
+        </div>
       ) : (
-        <Button onClick={() => setForm(true)}>記事を書く</Button>
+        <Button style={{marginLeft: '5vw'}} onClick={() => setForm(true)}><Icon name="write"/>記事を書く</Button>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

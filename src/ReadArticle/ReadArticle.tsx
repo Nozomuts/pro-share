@@ -39,31 +39,32 @@ const ReadArticle = () => {
               (el: any) =>
                 el.title.includes(searchItem) ||
                 el.text.includes(searchItem) ||
-                el.language.includes(searchItem)||
+                el.language.includes(searchItem) ||
                 el.name.toLowerCase().includes(searchItem.toLowerCase())
             );
           }
           setArticle(newArray);
         });
     }
-  }, [category, language,searchItem]);
+  }, [category, language, searchItem]);
 
   return (
-    <React.Fragment>
-      <Header activeItem='article' />
-      <h1 style={{ marginTop: 200 }}>read article</h1>
-      <Category
-        category={category}
-        language={language}
-        setCategory={(value: any) => setCategory(value)}
-        setLanguage={(value: any) => setLanguage(value)}
-      />
-      <Search searchItem={searchItem} setSearchItem={setSearchItem} />
-      <ArticleList article={article} />
-      <MediaQuery query='(max-width: 670px)'>
-        <Footer activeItem='article' />
-      </MediaQuery>
-    </React.Fragment>
+    <>
+      <div style={{ margin: '100px 0' }}>
+        <Header activeItem='article' />
+        <Category
+          category={category}
+          language={language}
+          setCategory={(value: any) => setCategory(value)}
+          setLanguage={(value: any) => setLanguage(value)}
+        />
+        <Search searchItem={searchItem} setSearchItem={setSearchItem} />
+        <ArticleList article={article} />
+        <MediaQuery query='(max-width: 670px)'>
+          <Footer activeItem='article' />
+        </MediaQuery>
+      </div>
+    </>
   );
 };
 

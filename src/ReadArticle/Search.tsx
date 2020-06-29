@@ -14,15 +14,15 @@ const Search = ({searchItem,setSearchItem}:any) => {
 
 
   return (
-    <div>
-      <Input
+    <div style={{width: '90vw', margin: '10px 5vw', marginBottom: 50}}>
+      検索：<Input
           loading={searchLoading}
           value={searchItem}
           onChange={handleSearchChange}
-          size='mini'
+          size='small'
           icon='search'
           name='searchTerm'
-          placeholder='Search Articles'
+          placeholder='検索'
         />
     </div>
   )

@@ -14,8 +14,8 @@ const UserSettings = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true)
-    setCompleteShow(false)
+    setLoading(true);
+    setCompleteShow(false);
     firebase
       .auth()
       .sendPasswordResetEmail(email)
@@ -23,16 +23,17 @@ const UserSettings = () => {
         console.log('send');
         setLoading(false);
         setCompleteShow(true);
-        setEmail('')
-      }).catch((err:string)=>{
-        console.error(err)
+        setEmail('');
+      })
+      .catch((err: string) => {
+        console.error(err);
       });
   };
+
   return (
-    <React.Fragment>
+    <>
+      <div style={{ marginTop: 200 }}></div>
       <Header activeItem='settings' />
-      <h1 style={{ marginTop: '13vh', marginLeft: '7vw' }}>設定</h1>
-      <hr />
       <ChangeAvatar />
       <ColorPanel />
       <p>パスワード再設定</p>
@@ -58,12 +59,12 @@ const UserSettings = () => {
         >
           送る
         </Button>
-        {completeShow&&<p>メールが送信されました</p>}
+        {completeShow && <p>メールが送信されました</p>}
       </Form>
       <MediaQuery query='(max-width: 670px)'>
         <Footer activeItem='settings' />
       </MediaQuery>
-    </React.Fragment>
+    </>
   );
 };
 

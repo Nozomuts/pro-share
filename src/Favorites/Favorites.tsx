@@ -5,6 +5,7 @@ import Footer from '../UI/Footer';
 import ArticleList from '../UI/ArticleList';
 import { useSelector } from 'react-redux';
 import firebase from './../config/firebase';
+import { Icon } from 'semantic-ui-react';
 
 const Favorites = () => {
   const [article, setArticle] = useState([]);
@@ -16,12 +17,14 @@ const Favorites = () => {
       firebase
         .firestore()
         .collection('users')
-        .onSnapshot((snapshot:any)=>{
-          snapshot.docs.filter((doc:any)=>doc.id===user.uid).map((doc:any)=>{
-            favoriteArray.push(...doc.data().favorite)
-            return doc
-          })
-        })
+        .onSnapshot((snapshot: any) => {
+          snapshot.docs
+            .filter((doc: any) => doc.id === user.uid)
+            .map((doc: any) => {
+              favoriteArray.push(...doc.data().favorite);
+              return doc;
+            });
+        });
       firebase
         .firestore()
         .collection('articles')
@@ -42,14 +45,16 @@ const Favorites = () => {
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       <Header activeItem='article' />
-      <h1 style={{ marginTop: 200 }}>favorites</h1>
-      <ArticleList article={article} />
-      <MediaQuery query='(max-width: 670px)'>
-        <Footer activeItem='article' />
-      </MediaQuery>
-    </React.Fragment>
+      <div style={{ margin: '100px 0' }}>
+        <h1 style={{marginLeft: '5vw'}}><Icon color='yellow' name="star"/>お気に入り</h1>
+        <ArticleList article={article} />
+        <MediaQuery query='(max-width: 670px)'>
+          <Footer activeItem='article' />
+        </MediaQuery>
+      </div>
+    </>
   );
 };
 

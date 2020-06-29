@@ -3,7 +3,6 @@ import Comment from './Comment';
 import {
   Message,
   Modal,
-  Header,
   Button,
   Image,
   Input,
@@ -172,7 +171,7 @@ const Article = ({ el, article }: any) => {
       });
       return element;
     });
-    console.log(newArticle)
+    console.log(newArticle);
     articlesRef
       .doc(el.uid)
       .update({
@@ -210,12 +209,15 @@ const Article = ({ el, article }: any) => {
   };
 
   return (
-    <Message onClick={() => setModal(true)}>
+    <Message
+      onClick={() => setModal(true)}
+      style={{ width: '90vw', margin: '0 5vw' }}
+    >
       <p>{el.title}</p>
       <p>
-        書いた人:
-        <Image avatar src={el.avatar} />:{el.name}
-        {unFavorite && '(削除済み)'}
+        書いた人：
+        <Image avatar src={el.avatar} /> {el.name}
+        {unFavorite && '(お気に入り削除済み)'}
       </p>
       <Modal open={modal} onClose={() => setModal(false)}>
         {edit ? (
@@ -250,13 +252,32 @@ const Article = ({ el, article }: any) => {
             </Button>
           </Form>
         ) : (
-          <React.Fragment>
-            <Header as='h1'>{el.title}</Header>
-            <Button onClick={changeFavorite}>
-              {favorite.includes(el.id)
-                ? 'お気に入りから削除'
-                : 'お気に入りに追加'}
-            </Button>
+          <div style={{width: '80vw', margin: '10px 5vw'}}>
+            <h1>
+              {el.title}{' '}
+              {favorite.includes(el.id) ? (
+                <Icon
+                  onClick={changeFavorite}
+                  size='small'
+                  name='star'
+                  color='yellow'
+                  style={{lineHeight: '36px'}}
+                />
+              ) : (
+                <Icon
+                  onClick={changeFavorite}
+                  size='small'
+                  name='star outline'
+                  color='black'
+                  style={{lineHeight: '36px'}}
+                />
+              )}
+            </h1>
+            <p>
+              書いた人：
+              <Image avatar src={el.avatar} /> {el.name}
+              {unFavorite && '(お気に入り削除済み)'}
+            </p>
             <Message>{el.text}</Message>
             <p>カテゴリー１：{el.category}</p>
             <p>カテゴリー２：{el.language}</p>
@@ -277,7 +298,8 @@ const Article = ({ el, article }: any) => {
             </Form>
             {error && <Message negative>{error}</Message>}
             <Segment>
-              {el.comment.length > 0 &&
+              <p>コメント：</p>
+              {el.comment.length > 0 ?
                 el.comment.map((el: any, i: number) => (
                   <Comment
                     key={i.toString()}
@@ -286,9 +308,9 @@ const Article = ({ el, article }: any) => {
                     changeComment={changeComment}
                     deleteComment={deleteComment}
                   />
-                ))}
+                )): <p>コメントはありません</p>}
             </Segment>
-          </React.Fragment>
+          </div>
         )}
       </Modal>
       <Modal onClose={() => setAlert(false)} open={alert}>

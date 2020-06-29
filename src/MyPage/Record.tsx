@@ -51,32 +51,52 @@ const Record = ({ user }: any) => {
   };
 
   return (
-    <React.Fragment>
-      <Gragh record={synthesisRecord}/>
-      <Button onClick={changeOpen}>{open ? '非公開にする' : '公開する'}</Button>
-      {error&&<Message negative>{error}</Message>}
-      
+    <>
+      <div style={{ display: 'flex', justifyContent: 'center', height: 40 }}>
+        <h1 style={{ marginRight: 10 }}>学習記録</h1>
+        <Button onClick={changeOpen}>
+          {open ? '非公開にする' : '公開する'}
+        </Button>
+      </div>
+      <Gragh record={synthesisRecord} />
       <RecordForm user={user} record={synthesisRecord} />
+      {error && <Message negative>{error}</Message>}
       <MediaQuery query='(max-width: 670px)'>
-        <Button active={toggle} onClick={() => setToggle(true)}>
-          合計
-        </Button>
-        <Button active={!toggle} onClick={() => setToggle(false)}>
-          デイリー
-        </Button>
+        <div style={{ width: '90vw', margin: '10px 5vw'}}>
+          <Button
+            active={!toggle}
+            onClick={() => setToggle(false)}
+            style={{ width: '45vw', margin: 0 }}
+          >
+            デイリー
+          </Button>
+          <Button
+            active={toggle}
+            onClick={() => setToggle(true)}
+            style={{ width: '45vw', margin: 0 }}
+          >
+            合計
+          </Button>
+        </div>
         {toggle ? (
-          <Synthesis record={synthesisRecord} />
+          <Synthesis
+            style={{ width: '90vw', margin: '10px 5vw' }}
+            record={synthesisRecord}
+          />
         ) : (
-          <Daily record={dailyRecord} />
+          <Daily
+            style={{ width: '90vw', margin: '10px 5vw' }}
+            record={dailyRecord}
+          />
         )}
       </MediaQuery>
       <MediaQuery query='(min-width: 671px)'>
-        <div style={{ display: 'flex', marginBottom: '50px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
           <Daily record={dailyRecord} />
           <Synthesis record={synthesisRecord} />
         </div>
       </MediaQuery>
-    </React.Fragment>
+    </>
   );
 };
 

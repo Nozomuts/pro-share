@@ -4,7 +4,7 @@ import Article from './Article';
 const ArticleList = ({article}:any) => {
   return (
     <>
-      {article&&article.map((el:any,i:number)=><Article el={el} key={i.toString()} article={article}/>)}
+      {article.length>0?article.map((el:any,i:number)=><Article el={el} key={i.toString()} article={article}/>):<h1 style={{marginLeft: '5vw'}}>記事がありません</h1>}
     </>
   )
 }
