@@ -86,9 +86,11 @@ const Article = ({ el, article }: any) => {
       })
       .then(() => {
         console.log('Success!');
+        setModal(false)
       })
       .catch((err: string) => {
         console.error(err);
+        setModal(false)
       });
   };
 

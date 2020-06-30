@@ -11,9 +11,8 @@ type Props = {
   activeItem: string;
 };
 
-
 const Header = ({ activeItem }: Props) => {
-  const color = useSelector((state:any)=>state.color)
+  const color = useSelector((state: any) => state.color);
   const handleSignout = () => {
     firebase
       .auth()
@@ -23,7 +22,7 @@ const Header = ({ activeItem }: Props) => {
 
   return (
     <div>
-      <div className={classes.Header} style={{backgroundColor: color.color}}>
+      <div className={classes.Header} style={{ backgroundColor: color.color }}>
         <h1 className={classes.HeaderTitle}>
           <Icon name='code' />
           <Link to='/mypage' style={{ color: 'white' }}>
@@ -56,20 +55,22 @@ const Header = ({ activeItem }: Props) => {
               activeItem === 'article' ? classes.active : classes.inActive
             }
           >
-            <Dropdown.Menu>
-              <Dropdown.Item>
-                <Link to='/write' style={{ color: 'black' }}>
-                  書く
+            <Dropdown.Menu style={{padding: 0}}>
+              <Dropdown.Item >
+                <Link to='/write'>
+                  <p style={{ color: 'black', width: 102, height: 36,textAlign: 'center',lineHeight: '36px' }}>書く</p>
                 </Link>
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link to='/read' style={{ color: 'black' }}>
-                  見る
+                <Link to='/read'>
+                  <p style={{ color: 'black', width: 102, height: 36,textAlign: 'center',lineHeight: '36px' }}>見る</p>
                 </Link>
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link to='/favorites' style={{ color: 'black' }}>
-                  お気に入り
+                <Link to='/favorites'>
+                  <p style={{ color: 'black', width: 102, height: 36,textAlign: 'center',lineHeight: '36px' }}>
+                    お気に入り
+                  </p>
                 </Link>
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -85,7 +86,7 @@ const Header = ({ activeItem }: Props) => {
             </p>
           </Link>
         </MediaQuery>
-        <ModalComponent text='ログアウト' clickEvent={handleSignout}/>
+        <ModalComponent text='ログアウト' clickEvent={handleSignout} />
       </div>
     </div>
   );
