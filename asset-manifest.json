@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/rpo-share/static/css/main.b48e322c.chunk.css",
+    "main.js": "/rpo-share/static/js/main.77d023b6.chunk.js",
+    "main.js.map": "/rpo-share/static/js/main.77d023b6.chunk.js.map",
+    "runtime-main.js": "/rpo-share/static/js/runtime-main.3cac4ddb.js",
+    "runtime-main.js.map": "/rpo-share/static/js/runtime-main.3cac4ddb.js.map",
+    "static/css/2.3552e0d3.chunk.css": "/rpo-share/static/css/2.3552e0d3.chunk.css",
+    "static/js/2.6e61850a.chunk.js": "/rpo-share/static/js/2.6e61850a.chunk.js",
+    "static/js/2.6e61850a.chunk.js.map": "/rpo-share/static/js/2.6e61850a.chunk.js.map",
+    "index.html": "/rpo-share/index.html",
+    "precache-manifest.53d935be9de3cd4f1089f08224febe72.js": "/rpo-share/precache-manifest.53d935be9de3cd4f1089f08224febe72.js",
+    "service-worker.js": "/rpo-share/service-worker.js",
+    "static/css/2.3552e0d3.chunk.css.map": "/rpo-share/static/css/2.3552e0d3.chunk.css.map",
+    "static/css/main.b48e322c.chunk.css.map": "/rpo-share/static/css/main.b48e322c.chunk.css.map",
+    "static/js/2.6e61850a.chunk.js.LICENSE.txt": "/rpo-share/static/js/2.6e61850a.chunk.js.LICENSE.txt",
+    "static/media/TopPage.module.css": "/rpo-share/static/media/binary.ca268719.jpg",
+    "static/media/semantic.min.css": "/rpo-share/static/media/outline-icons.ef60a4f6.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3cac4ddb.js",
+    "static/css/2.3552e0d3.chunk.css",
+    "static/js/2.6e61850a.chunk.js",
+    "static/css/main.b48e322c.chunk.css",
+    "static/js/main.77d023b6.chunk.js"
+  ]
+}
