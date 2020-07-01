@@ -6,40 +6,38 @@ import Record from './Record';
 import firebase from '../config/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { setColors } from './../re-ducks/color/actions';
+import { RootState } from '../re-ducks/store';
 
 const MyPage = () => {
   const dispatch = useDispatch();
 
   const [usersRef] = useState(firebase.firestore().collection('users'));
-  const user = useSelector((state: any) => state.user.currentUser);
+  const user = useSelector((state: RootState) => state.user.currentUser);
 
   useEffect(() => {
     if (user && user.uid) {
-      usersRef.onSnapshot((snapshot: any) => {
-        const userArray = snapshot.docs.map((doc: any) => {
+      usersRef.onSnapshot((snapshot) => {
+        const userArray = snapshot.docs.map((doc) => {
           return { ...doc.data() };
         });
-        if (userArray.filter((el: any) => el.id === user.uid).length > 0) {
-          const colorArray = userArray.filter(
-            (el: any) => el.id === user.uid
-          );
-          dispatch(
-            setColors(colorArray[0].color)
-          );
+        if (userArray.filter((el) => el.id === user.uid).length > 0) {
+          const colorArray = userArray.filter((el) => el.id === user.uid);
+          dispatch(setColors(colorArray[0].color));
         }
       });
     }
   }, [user]);
 
   return (
-    <React.Fragment>
-      <Header activeItem='mypage' />
-        <h1 style={{ marginTop: 200 }}>my page</h1>
+    <>
+      <div style={{ marginTop: 100 , paddingBottom: 100 }}>
+        <Header activeItem='mypage' />
         <Record user={user} />
-      <MediaQuery query='(max-width: 670px)'>
-        <Footer activeItem='mypage' />
-      </MediaQuery>
-    </React.Fragment>
+        <MediaQuery query='(max-width: 670px)'>
+          <Footer activeItem='mypage' />
+        </MediaQuery>
+      </div>
+    </>
   );
 };
 

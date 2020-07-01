@@ -2,23 +2,23 @@ import React, { useEffect, useState } from 'react';
 import Header from '../UI/Header';
 import MediaQuery from 'react-responsive';
 import Footer from '../UI/Footer';
-import Daily from '../Ranking/Daily';
-import Synthesis from '../Ranking/Synthesis';
+import RankingRecord from './RankingRecord';
 import firebase from './../config/firebase';
 import { Button } from 'semantic-ui-react';
+import { RankingType } from '../Types';
 
 const Ranking = () => {
-  const [synthesisRanking, setSynthesisRanking] = useState([]);
-  const [dailyRanking, setDailyRanking] = useState([]);
+  const [synthesisRanking, setSynthesisRanking] = useState<RankingType[]>([]);
+  const [dailyRanking, setDailyRanking] = useState<RankingType[]>([]);
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
     firebase
       .firestore()
       .collection('records')
-      .onSnapshot((snapshot: any) => {
+      .onSnapshot((snapshot) => {
         const synthesisArray = snapshot.docs
-          .filter((doc: any) => doc.data().open)
-          .map((doc: any) => {
+          .filter((doc) => doc.data().open)
+          .map((doc) => {
             const hourSum = doc
               .data()
               .record.reduce((result: number, current: any) => {
@@ -29,7 +29,11 @@ const Ranking = () => {
               .record.reduce((result: number, current: any) => {
                 return result + Number(current.min);
               }, 0);
-            return { name: doc.data().name,avatar: doc.data().avatar,time: hourSum + minSum };
+            return {
+              name: doc.data().name,
+              avatar: doc.data().avatar,
+              time: hourSum + minSum,
+            };
           });
         const newSynthesisArray = synthesisArray
           .sort((a: any, b: any) => {
@@ -77,30 +81,48 @@ const Ranking = () => {
   }, []);
 
   return (
-    <React.Fragment>
-      <Header activeItem='ranking' />
-      <h1 style={{ marginTop: 200 }}>ranking</h1>
-      <MediaQuery query='(min-width: 671px)'>
-        デイリー
-        <Daily ranking={dailyRanking} />
-        総合
-        <Synthesis ranking={synthesisRanking} />
-      </MediaQuery>
-      <MediaQuery query='(max-width: 670px)'>
-        <Button active={toggle} onClick={() => setToggle(true)}>
-          合計
-        </Button>
-        <Button active={!toggle} onClick={() => setToggle(false)}>
-          デイリー
-        </Button>
-        {toggle ? (
-          <Synthesis ranking={synthesisRanking} />
-        ) : (
-          <Daily ranking={dailyRanking} />
-        )}
-        <Footer activeItem='ranking' />
-      </MediaQuery>
-    </React.Fragment>
+    <>
+      <div style={{ marginTop: 100, paddingBottom: 100 }}>
+        <Header activeItem='ranking' />
+        <MediaQuery query='(min-width: 671px)'>
+          <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+            <div>
+              <h1>デイリーランキング</h1>
+              <RankingRecord ranking={dailyRanking} />
+            </div>
+            <div>
+              <h1>総合ランキング</h1>
+              <RankingRecord ranking={synthesisRanking} />
+            </div>
+          </div>
+        </MediaQuery>
+        <MediaQuery query='(max-width: 670px)'>
+          <div style={{ width: '90vw', margin: '10px 5vw' }}>
+            <h1>勉強時間ランキング</h1>
+            <Button
+              style={{ width: '45vw', margin: 0 }}
+              active={!toggle}
+              onClick={() => setToggle(false)}
+            >
+              デイリー
+            </Button>
+            <Button
+              style={{ width: '45vw', margin: 0 }}
+              active={toggle}
+              onClick={() => setToggle(true)}
+            >
+              合計
+            </Button>
+          </div>
+          {toggle ? (
+            <RankingRecord ranking={synthesisRanking} />
+          ) : (
+            <RankingRecord ranking={dailyRanking} />
+          )}
+          <Footer activeItem='ranking' />
+        </MediaQuery>
+      </div>
+    </>
   );
 };
 

@@ -1,7 +1,12 @@
 import React,{useState} from 'react'
 import { Input } from 'semantic-ui-react'
 
-const Search = ({searchItem,setSearchItem}:any) => {
+type Props = {
+  searchItem: string
+  setSearchItem: React.Dispatch<React.SetStateAction<string>>
+}
+
+const Search:React.FC<Props> = ({searchItem,setSearchItem}) => {
   const [searchLoading, setSearchLoading] = useState(false);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,15 +19,15 @@ const Search = ({searchItem,setSearchItem}:any) => {
 
 
   return (
-    <div>
-      <Input
+    <div style={{width: '90vw', margin: '10px auto', maxWidth: 800, marginBottom: 50}}>
+      検索：<Input
           loading={searchLoading}
           value={searchItem}
           onChange={handleSearchChange}
-          size='mini'
+          size='small'
           icon='search'
           name='searchTerm'
-          placeholder='Search Articles'
+          placeholder='検索'
         />
     </div>
   )

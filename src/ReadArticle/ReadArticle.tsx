@@ -7,63 +7,65 @@ import ArticleList from '../UI/ArticleList';
 import Search from './Search';
 import { useSelector } from 'react-redux';
 import firebase from './../config/firebase';
+import { RootState } from '../re-ducks/store';
+import { ArticleType } from '../Types';
 
 const ReadArticle = () => {
-  const [article, setArticle] = useState([]);
+  const [article, setArticle] = useState<ArticleType[]>([]);
   const [category, setCategory] = useState('');
   const [language, setLanguage] = useState('');
   const [searchItem, setSearchItem] = useState('');
-  const user = useSelector((state: any) => state.user.currentUser);
+  const user = useSelector((state: RootState) => state.user.currentUser);
 
   useEffect(() => {
     if (user) {
-      console.log(category, language);
       firebase
         .firestore()
         .collection('articles')
-        .onSnapshot((snapshot: any) => {
-          const articleArray: any = [];
-          snapshot.docs.map((doc: any) => {
+        .onSnapshot((snapshot) => {
+          const articleArray: ArticleType[] = [];
+          snapshot.docs.map((doc) => {
             articleArray.push(...doc.data().article);
             return articleArray;
           });
           let newArray = articleArray;
           if (category) {
-            newArray = newArray.filter((el: any) => el.category === category);
+            newArray = newArray.filter((el: ArticleType) => el.category === category);
           }
           if (language) {
-            newArray = newArray.filter((el: any) => el.language === language);
+            newArray = newArray.filter((el: ArticleType) => el.language === language);
           }
           if (searchItem) {
             newArray = newArray.filter(
-              (el: any) =>
+              (el: ArticleType) =>
                 el.title.includes(searchItem) ||
                 el.text.includes(searchItem) ||
-                el.language.includes(searchItem)||
+                el.language.includes(searchItem) ||
                 el.name.toLowerCase().includes(searchItem.toLowerCase())
             );
           }
           setArticle(newArray);
         });
     }
-  }, [category, language,searchItem]);
+  }, [category, language, searchItem]);
 
   return (
-    <React.Fragment>
-      <Header activeItem='article' />
-      <h1 style={{ marginTop: 200 }}>read article</h1>
-      <Category
-        category={category}
-        language={language}
-        setCategory={(value: any) => setCategory(value)}
-        setLanguage={(value: any) => setLanguage(value)}
-      />
-      <Search searchItem={searchItem} setSearchItem={setSearchItem} />
-      <ArticleList article={article} />
-      <MediaQuery query='(max-width: 670px)'>
-        <Footer activeItem='article' />
-      </MediaQuery>
-    </React.Fragment>
+    <>
+      <div style={{ marginTop: 100, paddingBottom: 100 }}>
+        <Header activeItem='article' />
+        <Category
+          category={category}
+          language={language}
+          setCategory={(value: any) => setCategory(value)}
+          setLanguage={(value: any) => setLanguage(value)}
+        />
+        <Search searchItem={searchItem} setSearchItem={setSearchItem} />
+        <ArticleList article={article} />
+        <MediaQuery query='(max-width: 670px)'>
+          <Footer activeItem='article' />
+        </MediaQuery>
+      </div>
+    </>
   );
 };
 

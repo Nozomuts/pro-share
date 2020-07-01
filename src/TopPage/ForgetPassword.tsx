@@ -9,22 +9,12 @@ import {
   Icon,
   Message,
 } from 'semantic-ui-react';
-import { useDispatch } from 'react-redux';
-import {clearUser} from '../re-ducks/user/actions'
+import { Link } from 'react-router-dom';
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [completeShow, setCompleteShow] = useState(false);
-  const dispatch=useDispatch()
-
-  const handleClick=()=>{
-    firebase
-      .auth()
-      .signOut()
-      .then(() => console.log('signed out'));
-    dispatch(clearUser())
-  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -48,8 +38,10 @@ const ForgetPassword = () => {
         <Segment stacked>メールが送信されました、確認してください</Segment>
       </Grid.Column>
       <Message>
-        <Icon name='redo' />
-        <p style={{color: 'blue',cursor: 'pointer'}} onClick={handleClick}>戻る</p>
+        <Link to='/'>
+          <Icon name='redo' />
+          戻る
+        </Link>
       </Message>
     </Grid>
   ) : (
@@ -85,8 +77,10 @@ const ForgetPassword = () => {
           </Segment>
         </Form>
         <Message>
-          <Icon name='redo' />
-          <p style={{color: 'blue',cursor: 'pointer'}} onClick={handleClick}>戻る</p>
+          <Link to='/'>
+            <Icon name='redo' />
+            戻る
+          </Link>
         </Message>
       </Grid.Column>
     </Grid>

@@ -5,34 +5,39 @@ import Footer from '../UI/Footer';
 import ArticleList from '../UI/ArticleList';
 import { useSelector } from 'react-redux';
 import firebase from './../config/firebase';
+import { Icon } from 'semantic-ui-react';
+import {RootState} from '../re-ducks/store'
+import { ArticleType } from '../Types';
 
 const Favorites = () => {
-  const [article, setArticle] = useState([]);
-  const user = useSelector((state: any) => state.user.currentUser);
+  const [article, setArticle] = useState<ArticleType[]>([]);
+  const user = useSelector((state: RootState) => state.user.currentUser);
 
   useEffect(() => {
     if (user) {
-      let favoriteArray: any = [];
+      let favoriteArray: string[] = [];
       firebase
         .firestore()
         .collection('users')
-        .onSnapshot((snapshot:any)=>{
-          snapshot.docs.filter((doc:any)=>doc.id===user.uid).map((doc:any)=>{
-            favoriteArray.push(...doc.data().favorite)
-            return doc
-          })
-        })
+        .onSnapshot((snapshot) => {
+          snapshot.docs
+            .filter((doc) => doc.id === user.uid)
+            .map((doc) => {
+              favoriteArray.push(...doc.data().favorite);
+              return doc;
+            });
+        });
       firebase
         .firestore()
         .collection('articles')
-        .onSnapshot((snapshot: any) => {
-          const articleArray: any = [];
-          snapshot.docs.map((doc: any) => {
+        .onSnapshot((snapshot) => {
+          const articleArray: ArticleType[]  = [];
+          snapshot.docs.map((doc) => {
             articleArray.push(...doc.data().article);
             return articleArray;
           });
           console.log(articleArray);
-          const newArray = articleArray.filter((el: any) =>
+          const newArray = articleArray.filter((el: ArticleType) =>
             favoriteArray.includes(el.id)
           );
           console.log(newArray);
@@ -42,14 +47,16 @@ const Favorites = () => {
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       <Header activeItem='article' />
-      <h1 style={{ marginTop: 200 }}>favorites</h1>
-      <ArticleList article={article} />
-      <MediaQuery query='(max-width: 670px)'>
-        <Footer activeItem='article' />
-      </MediaQuery>
-    </React.Fragment>
+      <div style={{ marginTop: 100,  paddingBottom: 100 }}>
+        <h1 style={{width: '90vw', maxWidth: 800, margin: '0 auto', marginBottom: 50 }}><Icon color='yellow' name="star"/>お気に入り</h1>
+        <ArticleList article={article} />
+        <MediaQuery query='(max-width: 670px)'>
+          <Footer activeItem='article' />
+        </MediaQuery>
+      </div>
+    </>
   );
 };
 

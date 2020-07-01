@@ -2,14 +2,14 @@ import React from 'react';
 import { Menu, Icon, Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
+import { RootState } from '../re-ducks/store';
 
 type Props = {
   activeItem: string;
 };
 
 const Footer = ({ activeItem }: Props) => {
-  const color = useSelector((state:any)=>state.color)
+  const color = useSelector((state: RootState) => state.color);
   return (
     <Menu
       size='small'
@@ -21,31 +21,31 @@ const Footer = ({ activeItem }: Props) => {
         bottom: 0,
         justifyContent: 'space-between',
         zIndex: 100,
-        backgroundColor: color.color
+        backgroundColor: color.color,
       }}
       inverted
     >
-      <Menu.Item
-        style={{ width: '25vw' }}
-        name='user'
-        active={activeItem === 'mypage'}
-      >
-        <Icon name='user' />
-        <Link to='/mypage' style={{ fontSize: '3vw' }}>
+      <Link to='/mypage' style={{ fontSize: '3vw' }}>
+        <Menu.Item
+          style={{ width: '25vw' }}
+          name='user'
+          active={activeItem === 'mypage'}
+        >
+          <Icon name='user' />
           マイページ
-        </Link>
-      </Menu.Item>
+        </Menu.Item>
+      </Link>
 
-      <Menu.Item
-        style={{ width: '25vw' }}
-        name='chess king'
-        active={activeItem === 'ranking'}
-      >
-        <Icon name='chess king' />
-        <Link to='/ranking' style={{ fontSize: '3vw' }}>
+      <Link to='/ranking' style={{ fontSize: '3vw' }}>
+        <Menu.Item
+          style={{ width: '25vw' }}
+          name='chess king'
+          active={activeItem === 'ranking'}
+        >
+          <Icon name='chess king' />
           ランキング
-        </Link>
-      </Menu.Item>
+        </Menu.Item>
+      </Link>
 
       <Menu.Item
         style={{ width: '25vw' }}
@@ -53,27 +53,24 @@ const Footer = ({ activeItem }: Props) => {
         active={activeItem === 'article'}
       >
         <Icon name='sticky note' />
-        <Dropdown  icon="caret up" text='記事' style={{ fontSize: '3vw' }}>
+        <Dropdown icon='caret up' text='記事' style={{ fontSize: '3vw' }}>
           <Dropdown.Menu>
             <Dropdown.Header />
             <Dropdown.Item>
+              <Link to='/write' style={{ fontSize: '3vw', color: 'black' }}>
               <Icon name='edit' />
-              <Link to='/write' style={{ fontSize: '3vw',color: 'black' }}>
                 書く
               </Link>
             </Dropdown.Item>
             <Dropdown.Item>
+              <Link to='/read' style={{ fontSize: '3vw', color: 'black' }}>
               <Icon name='book' />
-              <Link to='/read' style={{ fontSize: '3vw',color: 'black' }}>
                 読む
               </Link>
             </Dropdown.Item>
             <Dropdown.Item>
+              <Link to='/favorites' style={{ fontSize: '3vw', color: 'black' }}>
               <Icon name='star' />
-              <Link
-                to='/favorites'
-                style={{ fontSize: '3vw',color: 'black' }}
-              >
                 お気に入り
               </Link>
             </Dropdown.Item>
@@ -81,16 +78,16 @@ const Footer = ({ activeItem }: Props) => {
         </Dropdown>
       </Menu.Item>
 
-      <Menu.Item
-        style={{ width: '25vw' }}
-        name='settings'
-        active={activeItem === 'settings'}
-      >
-        <Icon name='settings' />
-        <Link to='/settings' style={{ fontSize: '3vw' }}>
+      <Link to='/settings' style={{ fontSize: '3vw' }}>
+        <Menu.Item
+          style={{ width: '25vw' }}
+          name='settings'
+          active={activeItem === 'settings'}
+        >
+          <Icon name='settings' />
           設定
-        </Link>
-      </Menu.Item>
+        </Menu.Item>
+      </Link>
     </Menu>
   );
 };
