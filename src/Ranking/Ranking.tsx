@@ -5,19 +5,20 @@ import Footer from '../UI/Footer';
 import RankingRecord from './RankingRecord';
 import firebase from './../config/firebase';
 import { Button } from 'semantic-ui-react';
+import { RankingType } from '../Types';
 
 const Ranking = () => {
-  const [synthesisRanking, setSynthesisRanking] = useState([]);
-  const [dailyRanking, setDailyRanking] = useState([]);
+  const [synthesisRanking, setSynthesisRanking] = useState<RankingType[]>([]);
+  const [dailyRanking, setDailyRanking] = useState<RankingType[]>([]);
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
     firebase
       .firestore()
       .collection('records')
-      .onSnapshot((snapshot: any) => {
+      .onSnapshot((snapshot) => {
         const synthesisArray = snapshot.docs
-          .filter((doc: any) => doc.data().open)
-          .map((doc: any) => {
+          .filter((doc) => doc.data().open)
+          .map((doc) => {
             const hourSum = doc
               .data()
               .record.reduce((result: number, current: any) => {

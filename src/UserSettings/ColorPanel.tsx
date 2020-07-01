@@ -4,22 +4,23 @@ import { SwatchesPicker } from 'react-color';
 import firebase from '../config/firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { setColors } from '../re-ducks/color/actions';
+import { RootState } from '../re-ducks/store';
 
 const ColorPanel = () => {
   const [modal, setModal] = useState(false);
   const [color, setColor] = useState('');
   const [usersRef] = useState(firebase.firestore().collection('users'));
-  const user = useSelector((state: any) => state.user.currentUser);
+  const user = useSelector((state: RootState) => state.user.currentUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (user && user.uid) {
-      usersRef.onSnapshot((snapshot: any) => {
-        const userArray = snapshot.docs.map((doc: any) => {
+      usersRef.onSnapshot((snapshot) => {
+        const userArray = snapshot.docs.map((doc) => {
           return { ...doc.data() };
         });
-        if (userArray.filter((el: any) => el.id === user.uid).length > 0) {
-          const colorArray = userArray.filter((el: any) => el.id === user.uid);
+        if (userArray.filter((el) => el.id === user.uid).length > 0) {
+          const colorArray = userArray.filter((el) => el.id === user.uid);
           setColor(colorArray[0].color);
           dispatch(setColors(colorArray[0].color));
         }

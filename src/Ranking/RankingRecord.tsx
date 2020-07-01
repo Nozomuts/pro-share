@@ -2,9 +2,14 @@ import React from 'react';
 import { Message, Image } from 'semantic-ui-react';
 import Crown from '../image/crown.png';
 import MediaQuery from 'react-responsive';
+import {RankingType} from '../Types'
 
-const RankingRecord = ({ ranking }: any) => {
-  const jsx = ranking.map((rank: any, i: number) => {
+type Props = {
+  ranking: RankingType[]
+}
+
+const RankingRecord:React.FC<Props> = ({ ranking }) => {
+  const jsx = ranking.map((rank: RankingType, i: number) => {
     return (
       <Message key={i.toString()}>
         <h4>

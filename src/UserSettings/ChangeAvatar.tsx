@@ -12,9 +12,10 @@ import {
 import { useSelector } from 'react-redux';
 import AvatarEditor from 'react-avatar-editor';
 import MediaQuery from 'react-responsive';
+import { RootState } from '../re-ducks/store';
 
 const ChangeAvatar = () => {
-  const user = useSelector((state: any) => state.user.currentUser);
+  const user = useSelector((state: RootState) => state.user.currentUser);
   const [modal, setModal] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [cropedImage, setCroppedImage] = useState('');

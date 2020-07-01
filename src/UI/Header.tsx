@@ -6,13 +6,14 @@ import MediaQuery from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ModalComponent from './ModalComponent';
+import { RootState } from '../re-ducks/store';
 
 type Props = {
   activeItem: string;
 };
 
 const Header = ({ activeItem }: Props) => {
-  const color = useSelector((state: any) => state.color);
+  const color = useSelector((state: RootState) => state.color);
   const handleSignout = () => {
     firebase
       .auth()

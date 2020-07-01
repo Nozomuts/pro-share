@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import { Button, Message, Image, Modal, Icon, Input } from 'semantic-ui-react';
 import ModalComponent from './ModalComponent';
+import { CommentType } from '../Types';
 
-const Comment = ({ comment, user, changeComment, deleteComment }: any) => {
+type Props = {
+  comment: CommentType
+  user: any
+  changeComment: (id: string, text: string) => void
+  deleteComment: (id: string) => void
+}
+
+const Comment:React.FC<Props> = ({ comment, user, changeComment, deleteComment }) => {
   const [text, setText] = useState(comment.text);
   const [modal, setModal] = useState(false);
   const [error, setError] = useState('');

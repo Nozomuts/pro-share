@@ -5,8 +5,9 @@ import Footer from '../UI/Footer';
 import ChangeAvatar from './ChangeAvatar';
 import ColorPanel from './ColorPanel';
 import firebase from '../config/firebase';
-import { Form, Button, Input, Modal, Image, Message, Icon } from 'semantic-ui-react';
+import { Button, Input, Modal, Image, Message, Icon } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
+import { RootState } from '../re-ducks/store';
 
 const UserSettings = () => {
   const [email, setEmail] = useState('');
@@ -14,7 +15,7 @@ const UserSettings = () => {
   const [completeShow, setCompleteShow] = useState(false);
   const [modal, setModal] = useState(false);
   const [error, setError] = useState('');
-  const user = useSelector((state: any) => state.user.currentUser);
+  const user = useSelector((state: RootState) => state.user.currentUser);
 
   const handleClick = () => {
     if (email) {
@@ -133,7 +134,7 @@ const UserSettings = () => {
           {error && <Message>{error}</Message>}
         </Modal.Content>
         <Modal.Actions>
-          <Button color='green' onClick={handleClick}>
+          <Button color='green' onClick={handleClick} loading={loading}>
             <Icon name='check' /> 送信
           </Button>
           <Button color='red' onClick={() => setModal(false)}>

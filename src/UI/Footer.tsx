@@ -2,13 +2,14 @@ import React from 'react';
 import { Menu, Icon, Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { RootState } from '../re-ducks/store';
 
 type Props = {
   activeItem: string;
 };
 
 const Footer = ({ activeItem }: Props) => {
-  const color = useSelector((state: any) => state.color);
+  const color = useSelector((state: RootState) => state.color);
   return (
     <Menu
       size='small'

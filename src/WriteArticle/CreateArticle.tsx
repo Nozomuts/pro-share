@@ -12,8 +12,14 @@ import {
 import firebase from './../config/firebase';
 import shortid from 'shortid';
 import { categoryOptions, languageOptions } from '../UI/SelectOptions';
+import { ArticleType } from '../Types';
 
-const CreateArticle = ({ user, article }: any) => {
+type Props = {
+  user: any,
+  article: ArticleType[]
+}
+
+const CreateArticle:React.FC<Props> = ({ user, article }) => {
   const [form, setForm] = useState(false);
   const [languageValue, setLanguageValue] = useState('');
   const [categoryValue, setCategoryValue] = useState('');
@@ -97,13 +103,13 @@ const CreateArticle = ({ user, article }: any) => {
               placeholder='選択してください'
               value={categoryValue}
               options={categoryOptions}
-              onChange={(e: any, { value }: any) => setCategoryValue(value)}
+              onChange={(e: React.SyntheticEvent<HTMLElement, Event>, { value }: any) => setCategoryValue(value)}
               style={{ marginRight: '10px' }}
             />
             <Select
               value={languageValue}
               options={languageOptions}
-              onChange={(e: any, { value }: any) => setLanguageValue(value)}
+              onChange={(e: React.SyntheticEvent<HTMLElement, Event>, { value }: any) => setLanguageValue(value)}
               placeholder='選択してください'
             />
           </div>

@@ -6,20 +6,21 @@ import CreateArticle from './CreateArticle';
 import ArticleList from '../UI/ArticleList';
 import { useSelector } from 'react-redux';
 import firebase from './../config/firebase';
+import { RootState } from '../re-ducks/store';
 
 const WriteArticle = () => {
   const [article, setArticle] = useState([]);
-  const user = useSelector((state: any) => state.user.currentUser);
+  const user = useSelector((state: RootState) => state.user.currentUser);
 
   useEffect(() => {
     if (user) {
       firebase
         .firestore()
         .collection('articles')
-        .onSnapshot((snapshot: any) => {
+        .onSnapshot((snapshot) => {
           snapshot.docs
-            .filter((doc: any) => doc.id === user.uid)
-            .map((doc: any) => {
+            .filter((doc) => doc.id === user.uid)
+            .map((doc) => {
               setArticle(doc.data().article);
               return { ...doc.data().article };
             });

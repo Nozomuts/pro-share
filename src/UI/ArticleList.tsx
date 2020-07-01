@@ -1,11 +1,16 @@
 import React from 'react';
 import Article from './Article';
+import { ArticleType } from '../Types';
 
-const ArticleList = ({ article }: any) => {
+type Props = {
+  article: ArticleType[]
+}
+
+const ArticleList:React.FC<Props> = ({ article }) => {
   return (
     <>
       {article.length > 0 ? (
-        article.map((el: any, i: number) => (
+        article.map((el: ArticleType, i: number) => (
           <Article el={el} key={i.toString()} article={article} />
         ))
       ) : (

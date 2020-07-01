@@ -17,9 +17,16 @@ import firebase from './../config/firebase';
 import { categoryOptions, languageOptions } from './SelectOptions';
 import ModalComponent from './ModalComponent';
 import shortid from 'shortid';
+import { ArticleType, CommentType } from '../Types';
+import { RootState } from '../re-ducks/store';
 
-const Article = ({ el, article }: any) => {
-  const user = useSelector((state: any) => state.user.currentUser);
+type Props = {
+  el: ArticleType;
+  article: ArticleType[];
+};
+
+const Article: React.FC<Props> = ({ el, article }) => {
+  const user = useSelector((state: RootState) => state.user.currentUser);
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [languageValue, setLanguageValue] = useState(el.language);
@@ -27,7 +34,7 @@ const Article = ({ el, article }: any) => {
   const [title, setTitle] = useState(el.title);
   const [text, setText] = useState(el.text);
   const [unFavorite, setUnFavorite] = useState(false);
-  const [favorite, setFavorite] = useState<any>([]);
+  const [favorite, setFavorite] = useState<string[]>([]);
   const [alert, setAlert] = useState(false);
   const [commentText, setCommentText] = useState('');
   const [error, setError] = useState('');
@@ -36,10 +43,10 @@ const Article = ({ el, article }: any) => {
 
   useEffect(() => {
     if (user && user.uid) {
-      usersRef.onSnapshot((snapshot: any) => {
+      usersRef.onSnapshot((snapshot) => {
         snapshot.docs
-          .filter((doc: any) => user.uid === doc.id)
-          .map((doc: any) => {
+          .filter((doc) => user.uid === doc.id)
+          .map((doc) => {
             setFavorite(doc.data().favorite);
             console.log(doc.data().favorite);
             return doc;
@@ -51,7 +58,7 @@ const Article = ({ el, article }: any) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (user) {
-      const newArticle = article.map((element: any) => {
+      const newArticle = article.map((element: ArticleType) => {
         if (element.id === el.id) {
           element.title = title;
           element.text = text;
@@ -77,8 +84,8 @@ const Article = ({ el, article }: any) => {
 
   const deleteArticle = () => {
     const newArticle = article
-      .filter((element: any) => element.uid === user.uid)
-      .filter((element: any) => element.id !== el.id);
+      .filter((element: ArticleType) => element.uid === user.uid)
+      .filter((element: ArticleType) => element.id !== el.id);
     articlesRef
       .doc(user.uid)
       .update({
@@ -86,17 +93,19 @@ const Article = ({ el, article }: any) => {
       })
       .then(() => {
         console.log('Success!');
-        setModal(false)
+        setModal(false);
       })
       .catch((err: string) => {
         console.error(err);
-        setModal(false)
+        setModal(false);
       });
   };
 
   const changeFavorite = () => {
     if (favorite.includes(el.id)) {
-      const newfavorite = favorite.filter((element: any) => element !== el.id);
+      const newfavorite = favorite.filter(
+        (element: string) => element !== el.id
+      );
       console.log(newfavorite);
       usersRef
         .doc(user.uid)
@@ -140,7 +149,7 @@ const Article = ({ el, article }: any) => {
       const h = date.getHours();
       const mi = date.getMinutes();
       const time = `${y}年${mo}月${d}日${h}時${mi}分`;
-      const newComment = {
+      const newComment: CommentType = {
         name: user.displayName,
         avatar: user.photoURL,
         text: commentText,
@@ -148,8 +157,8 @@ const Article = ({ el, article }: any) => {
         id: shortid.generate(),
       };
       const newArticle = article
-        .filter((element: any) => element.uid === el.uid)
-        .map((element: any) => {
+        .filter((element: ArticleType) => element.uid === el.uid)
+        .map((element: ArticleType) => {
           if (el.id === element.id) {
             element.comment.push(newComment);
           }
@@ -172,9 +181,11 @@ const Article = ({ el, article }: any) => {
 
   const deleteComment = (id: string) => {
     const newArticle = article
-      .filter((element: any) => element.uid === el.uid)
-      .map((element: any) => {
-        element.comment = element.comment.filter((el: any) => el.id !== id);
+      .filter((element: ArticleType) => element.uid === el.uid)
+      .map((element: ArticleType) => {
+        element.comment = element.comment.filter(
+          (el: CommentType) => el.id !== id
+        );
         return element;
       });
     console.log(newArticle);
@@ -193,9 +204,9 @@ const Article = ({ el, article }: any) => {
 
   const changeComment = (id: string, text: string) => {
     const newArticle = article
-      .filter((element: any) => element.uid === el.uid)
-      .map((element: any) => {
-        element.comment.map((el: any) => {
+      .filter((element: ArticleType) => element.uid === el.uid)
+      .map((element: ArticleType) => {
+        element.comment.map((el: CommentType) => {
           if (el.id === id) {
             el.text = text;
           }
@@ -245,12 +256,17 @@ const Article = ({ el, article }: any) => {
           </Button>
         </Modal.Actions>
       </Modal>
-      <Modal style={{
+      <Modal
+        style={{
           position: 'absolute',
           top: '50%',
           left: '50%',
           transform: 'translateY(-50%) translateX(-50%)',
-        }} open={edit} onClose={() => setEdit(false)} size='small'>
+        }}
+        open={edit}
+        onClose={() => setEdit(false)}
+        size='small'
+      >
         <Modal.Header>記事編集</Modal.Header>
         <Form
           style={{
@@ -283,13 +299,19 @@ const Article = ({ el, article }: any) => {
               placeholder='選択してください'
               value={categoryValue}
               options={categoryOptions}
-              onChange={(e: any, { value }: any) => setCategoryValue(value)}
+              onChange={(
+                e: React.SyntheticEvent<HTMLElement, Event>,
+                { value }: any
+              ) => setCategoryValue(value)}
               style={{ marginRight: '10px' }}
             />
             <Select
               value={languageValue}
               options={languageOptions}
-              onChange={(e: any, { value }: any) => setLanguageValue(value)}
+              onChange={(
+                e: React.SyntheticEvent<HTMLElement, Event>,
+                { value }: any
+              ) => setLanguageValue(value)}
               placeholder='選択してください'
             />
           </div>
@@ -371,7 +393,7 @@ const Article = ({ el, article }: any) => {
             <p>カテゴリー１：{el.category}</p>
             <p>カテゴリー２：{el.language}</p>
           </div>
-          <Modal.Content scrolling style={{marginBottom: 20}}>
+          <Modal.Content scrolling style={{ marginBottom: 20 }}>
             <Segment>
               <p>コメント：(Enterキーで送信)</p>
               <Form
@@ -394,7 +416,7 @@ const Article = ({ el, article }: any) => {
               </Form>
               {error && <Message negative>{error}</Message>}
               {el.comment.length > 0 ? (
-                el.comment.map((el: any, i: number) => (
+                el.comment.map((el: CommentType, i: number) => (
                   <Comment
                     key={i.toString()}
                     comment={el}

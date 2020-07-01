@@ -1,7 +1,12 @@
 import React,{useState} from 'react'
 import { Input } from 'semantic-ui-react'
 
-const Search = ({searchItem,setSearchItem}:any) => {
+type Props = {
+  searchItem: string
+  setSearchItem: React.Dispatch<React.SetStateAction<string>>
+}
+
+const Search:React.FC<Props> = ({searchItem,setSearchItem}) => {
   const [searchLoading, setSearchLoading] = useState(false);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

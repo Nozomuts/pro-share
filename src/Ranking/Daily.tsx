@@ -1,11 +1,16 @@
 import React from 'react';
 import { Message, Image } from 'semantic-ui-react';
 import Crown from '../image/crown.png';
+import { RankingType } from '../Types';
 
-const Daily = ({ ranking }: any) => {
+type Props = {
+  ranking: RankingType[]
+}
+
+const Daily:React.FC<Props> = ({ ranking }) => {
   return (
     <>
-      {ranking.map((rank: any, i: number) => {
+      {ranking.map((rank: RankingType, i: number) => {
         return (
           <Message
             style={{ width: '90vw', margin: '10px 5vw' }}

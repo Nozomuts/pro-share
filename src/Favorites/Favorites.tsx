@@ -6,21 +6,23 @@ import ArticleList from '../UI/ArticleList';
 import { useSelector } from 'react-redux';
 import firebase from './../config/firebase';
 import { Icon } from 'semantic-ui-react';
+import {RootState} from '../re-ducks/store'
+import { ArticleType } from '../Types';
 
 const Favorites = () => {
-  const [article, setArticle] = useState([]);
-  const user = useSelector((state: any) => state.user.currentUser);
+  const [article, setArticle] = useState<ArticleType[]>([]);
+  const user = useSelector((state: RootState) => state.user.currentUser);
 
   useEffect(() => {
     if (user) {
-      let favoriteArray: any = [];
+      let favoriteArray: string[] = [];
       firebase
         .firestore()
         .collection('users')
-        .onSnapshot((snapshot: any) => {
+        .onSnapshot((snapshot) => {
           snapshot.docs
-            .filter((doc: any) => doc.id === user.uid)
-            .map((doc: any) => {
+            .filter((doc) => doc.id === user.uid)
+            .map((doc) => {
               favoriteArray.push(...doc.data().favorite);
               return doc;
             });
@@ -28,14 +30,14 @@ const Favorites = () => {
       firebase
         .firestore()
         .collection('articles')
-        .onSnapshot((snapshot: any) => {
-          const articleArray: any = [];
-          snapshot.docs.map((doc: any) => {
+        .onSnapshot((snapshot) => {
+          const articleArray: ArticleType[]  = [];
+          snapshot.docs.map((doc) => {
             articleArray.push(...doc.data().article);
             return articleArray;
           });
           console.log(articleArray);
-          const newArray = articleArray.filter((el: any) =>
+          const newArray = articleArray.filter((el: ArticleType) =>
             favoriteArray.includes(el.id)
           );
           console.log(newArray);

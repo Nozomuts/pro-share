@@ -12,11 +12,18 @@ import {
 import firebase from '../config/firebase';
 import shortid from 'shortid';
 import { hourOptions, minOptions } from '../UI/SelectOptions';
+import { RecordType } from '../Types';
 
-const RecordForm = ({ user, record, open }: any) => {
+type Props = {
+  user: any;
+  record: RecordType[];
+  open: boolean;
+};
+
+const RecordForm: React.FC<Props> = ({ user, record, open }) => {
   const [title, setTitle] = useState('');
-  const [hour, setHour] = useState<any>('');
-  const [min, setMin] = useState<any>('');
+  const [hour, setHour] = useState('');
+  const [min, setMin] = useState('');
   const [detail, setDetail] = useState('');
   const [error, setError] = useState('');
   const [modal, setModal] = useState(false);

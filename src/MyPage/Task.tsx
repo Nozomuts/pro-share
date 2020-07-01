@@ -13,15 +13,23 @@ import ModalComponent from './../UI/ModalComponent';
 import firebase from 'firebase';
 import { useSelector } from 'react-redux';
 import { minOptions, hourOptions } from './../UI/SelectOptions';
+import { RecordType } from '../Types';
+import {RootState} from '../re-ducks/store'
 
-const Task = ({ el, deleteRecord, record }: any) => {
+type Props = {
+  el: RecordType
+  deleteRecord: (id: string) => void
+  record: RecordType[]
+}
+
+const Task:React.FC<Props> = ({ el, deleteRecord, record }) => {
   const [modal, setModal] = useState(false);
   const [title, setTitle] = useState(el.title);
   const [detail, setDetail] = useState(el.detail);
   const [hour, setHour] = useState(el.hour);
   const [min, setMin] = useState(el.min);
   const [error, setError] = useState('');
-  const user = useSelector((state: any) => state.user.currentUser);
+  const user = useSelector((state: RootState) => state.user.currentUser);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,7 +37,7 @@ const Task = ({ el, deleteRecord, record }: any) => {
       setError('値が入力されていません');
     } else {
       if (user) {
-        const newRecord = record.map((element: any) => {
+        const newRecord = record.map((element: RecordType) => {
           if (element.id === el.id) {
             element.title = title;
             element.detail = detail;

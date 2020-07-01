@@ -3,20 +3,26 @@ import Task from './Task';
 import firebase from './../config/firebase';
 import { useSelector } from 'react-redux';
 import MediaQuery from 'react-responsive';
+import { RecordType } from '../Types';
+import { RootState } from '../re-ducks/store';
 
-const Daily = ({ record }: any) => {
-  const user = useSelector((state: any) => state.user.currentUser);
+type Props = {
+  record: RecordType[]
+}
+
+const Daily:React.FC<Props> = ({ record }) => {
+  const user = useSelector((state: RootState) => state.user.currentUser);
 
   let time = 0;
   if (record) {
-    record.map((el: any) => {
+    record.map((el: RecordType) => {
       time += Number(el.hour) * 60 + Number(el.min);
       return time;
     });
   }
 
   const deleteRecord = (id: string) => {
-    const newRecord = record.filter((el: any) => el.id !== id);
+    const newRecord = record.filter((el: RecordType) => el.id !== id);
     firebase.firestore().collection('records').doc(user.uid).update({
       record: newRecord,
     });
@@ -29,7 +35,7 @@ const Daily = ({ record }: any) => {
       <h3 style={{textAlign: 'center'}}>今日の勉強時間：
       {`${Math.floor(time / 60)}時間${time % 60}分`}</h3>
       {record &&
-        record.map((el: any, i: number) => {
+        record.map((el: RecordType, i: number) => {
           return (
             <Task
               el={el}

@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { Modal, Icon, Button } from 'semantic-ui-react';
 
-const ModalComponent = ({ text, clickEvent, tiny }: any) => {
+type Props = {
+  text: string;
+  clickEvent: () => void;
+  tiny?: boolean;
+};
+
+const ModalComponent:React.FC<Props> = ({ text, clickEvent, tiny }) => {
   const [modal, setModal] = useState(false);
 
   const handleClick = () => {
@@ -11,7 +17,11 @@ const ModalComponent = ({ text, clickEvent, tiny }: any) => {
   return (
     <React.Fragment>
       {tiny ? (
-        <Icon name='trash alternate' onClick={() => setModal(true)} style={{cursor: 'pointer'}}/>
+        <Icon
+          name='trash alternate'
+          onClick={() => setModal(true)}
+          style={{ cursor: 'pointer' }}
+        />
       ) : (
         <Button color='red' onClick={() => setModal(true)}>
           {text === '削除' && <Icon name='trash alternate' />}
